@@ -869,19 +869,13 @@ $cards = $addCards->getAll();
     <!-- main panel -->
     <div class="container">
       <div class="row">
-        <h1 class="d-flex justify-content-center mt-6"> Add Flashcards </h1>
+        <h1 class="d-flex justify-content-center mt-6"> [NAME OF SET] </h1>
         <hr>
       </div>
-      <div class="row">
-        <div class="container-fluid px-0 overflow-hidden">
+      <div class="row justify-content-center">
+        <div class="container-fluid px-0 align-items-center">
           <div class="row py-4 px-4 mt-3">
-            <div class="col-12 mx-auto">
-              <button class="btn bg-gradient-primary btn-icon" type="button">
-                <div class="d-flex align-items-center">
-                  <i class="fa fa-graduation-cap me-2" aria-hidden="true"></i>
-                  Quiz
-                </div>
-              </button>
+            <div class="col-12">
               <button class="btn bg-gradient-primary btn-icon" type="button">
                 <div class="d-flex align-items-center">
                   <i class="fa fa-book me-2" aria-hidden="true"></i>
@@ -929,7 +923,15 @@ $cards = $addCards->getAll();
                                   <p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i>
                                 </div>
                               </div>
-                              <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
+                              <div class="container card-title text-center" style="position: absolute">
+                                <h6>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt quae nulla odio dolorem eligendi architecto veritatis consectetur illum natus temporibus repudiandae minus inventore sunt quia porro repellat, quibusdam esse! Necessitatibus?</h6>
+                              </div>
+                              <div class="row justify-content-center mt-10">
+                                <button type="button" class="col-5 m-2 btn btn-outline-dark">Light</button>
+                                <button type="button" class="col-5 m-2 btn btn-outline-dark">Light</button>
+                                <button type="button" class="col-5 m-2 btn btn-outline-dark">Light</button>
+                                <button type="button" class="col-5 m-2 btn btn-outline-dark">Light</button>
+                              </div>
                             </div>
                           </div>
                           <!-- End Card 3 Front -->
@@ -945,7 +947,7 @@ $cards = $addCards->getAll();
                                   <p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i>
                                 </div>
                               </div>
-                              <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
+                              <h2 class="card-title text-center mt-8 px-8"><?php echo $card['title'] ?></h2>
                             </div>
                           </div>
 
@@ -969,10 +971,18 @@ $cards = $addCards->getAll();
                           <div id="card" class="card front">
                             <div class="card-block">
                               <div class="row">
-                                <div class="col"><h6 class="card-title text-start mx-4 my-3">1 / 9</h6></div>
-                                <div class="col"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i></div>
+                                <div class="col">
+                                  <h6 class="card-title text-start mx-4 my-3">1 / 9</h6>
+                                </div>
+                                <div class="col">
+                                  <p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i>
+                                </div>
                               </div>
                               <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
+                              <div class="row m-4 mx-8">
+                                <button type="button" class="col-6 btn btn-outline-dark">Light</button>
+                                <button type="button" class="col-6 ml-4 btn btn-outline-dark">Light</button>
+                              </div>
                             </div>
                           </div>
                           <!-- End Card 3 Front -->
@@ -981,8 +991,12 @@ $cards = $addCards->getAll();
                           <div class="card back text-center">
                             <div class="card-block">
                               <div class="row">
-                                <div class="col"><h6 class="card-title text-start mx-4 my-3">1 / 9</h6></div>
-                                <div class="col"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i></div>
+                                <div class="col">
+                                  <h6 class="card-title text-start mx-4 my-3">1 / 9</h6>
+                                </div>
+                                <div class="col">
+                                  <p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i>
+                                </div>
                               </div>
                               <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
                             </div>
@@ -1051,84 +1065,6 @@ $cards = $addCards->getAll();
           </style>
           <!-- End Card 3 -->
 
-          <!-- <div id="scene" class="scene">
-            <div id="card" class="card">
-              <div class="card__face card__face--front text-center">front</div>
-              <div id="back" class="card__face card__face--back text-center">back</div>
-            </div>
-          </div> -->
-
-          <!-- Semi-working flip animation -->
-          <!-- <div id="object" class="card shadow mb-5 bg-body rounded py-10">
-            <div class="card__face card-body text-center">
-              <h3 id="front" class="card-title">
-                PDC10
-              </h3>
-            </div>
-            <div class="card__face card-body text-center">
-              <h3 id="back" class="card-title">
-                Professional Domain Course 1
-              </h3>
-            </div>
-          </div> -->
-
-          <!-- <style>
-            #scene {
-              width: 800px;
-              height: 460px;
-              perspective: 1200px;
-            }
-
-            #card {
-              width: 100%;
-              height: 100%;
-              position: relative;
-              transition: transform 1s;
-              transform-style: preserve-3d;
-            }
-
-            .card__face {
-              position: absolute;
-              height: 100%;
-              width: 100%;
-              backface-visibility: hidden;
-            }
-
-            #back {
-              transform: rotateX(180deg);
-            }
-
-            #card.is-flipped {
-              transform: rotateX(180deg);
-            }
-          </style>
-
-          <script>
-            var card = document.querySelector('#card');
-            card.addEventListener('click', function () {
-              card.classList.toggle('is-flipped');
-            });
-          </script> -->
-
-        </div>
-        <div class="col-4">
-          <form method="POST">
-            <div class="container ml-2">
-              <div class="mb-3">
-                <!-- placeholder value of 1 in set id !-->
-                <input type="hidden" class="form-control" name="set_id" value="1">
-              </div>
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Term</label>
-                <input type="text" class="form-control" name="title" id="exampleFormControlInput1" placeholder="Information Technology">
-              </div>
-              <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Definition</label>
-                <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary" name="card">Save</button>
-            </div>
-          </form>
         </div>
       </div>
     </div>
