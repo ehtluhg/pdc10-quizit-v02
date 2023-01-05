@@ -2,10 +2,6 @@
 include ('vendor/autoload.php');
 require ('init.php');
 use App\User;
-
-$getLoginInfo = new User('');
-$getLoginInfo->setConnection($connection);
-
 ?>
 
 <!DOCTYPE html>
@@ -38,8 +34,11 @@ $getLoginInfo->setConnection($connection);
       <div class="col-12">
         <nav class="navbar navbar-expand-lg  blur blur-rounded top-0  z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
           <div class="container-fluid px-0">
-            <a class="navbar-brand font-weight-bolder ms-sm-3" href="https://demos.creative-tim.com/soft-ui-design-system/index.html" rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom" target="_blank">
-              Soft UI Design System
+            <a class="navbar-brand font-weight-bolder ms-sm-3"
+              href="index.php" rel="tooltip"
+              title="Designed and Coded by Creative Tim" data-placement="bottom" target="_blank">
+              <img src="./assets/img/QuizIt.png" width="65px" alt="down-arrow" class="arrow ms-1">
+
             </a>
             <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon mt-2">
@@ -711,12 +710,6 @@ $getLoginInfo->setConnection($connection);
                     <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Star us on Github">Github</p>
                   </a>
                 </li>
-                <li class="nav-item my-auto ms-3 ms-lg-0">
-                  <a href="https://www.creative-tim.com/builder/soft-ui-design-system" class="btn btn-sm btn-outline-primary btn-round mb-0 me-1 mt-2 mt-md-0">Online Builder</a>
-                </li>
-                <li class="nav-item my-auto ms-3 ms-lg-0">
-                  <a href="https://www.creative-tim.com/product/soft-ui-design-system-pro" class="btn btn-sm  bg-gradient-dark  btn-round mb-0 me-1 mt-2 mt-md-0">Upgrade to Pro</a>
-                </li>
               </ul>
             </div>
           </div>
@@ -791,10 +784,12 @@ $getLoginInfo->setConnection($connection);
 <?php
 
 if(isset($_POST['login'])) {
-
+    $getLoginInfo = new User('');
+    $getLoginInfo->setConnection($connection);
     $loginInfo = $getLoginInfo->login($_POST['email_address'], $_POST['password']);
+
     // Si Audrey po gumawa ng pag-redirect ng page to index.php
-    echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
+    echo "<script type='text/javascript'> document.location = 'home.php'; </script>";
     exit();
 
 }

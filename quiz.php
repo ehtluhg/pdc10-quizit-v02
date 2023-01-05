@@ -8,6 +8,24 @@ $addCards = new Card('');
 $addCards->setConnection($connection);
 $cards = $addCards->getAll();
 
+ if(isset($_POST['submit'])){ 
+  //check if form was submitted
+  try {
+    $score = 0;
+    foreach ($cards as $card){
+      $i = $card['id'];
+      $answer = $card['title'];
+      if ($answer == $_POST[$i]){
+        $score++;
+      }
+    }
+    $total = $_POST['questions'];
+    echo $score;
+    header("Location: quiz-results.php" . "?score=" . $score . "&total=" . $total); 
+  } catch (Exception $e) {
+      error_log($e->getMessage());
+  }
+}
 ?>
 
 <html lang="en" itemscope itemtype="http://schema.org/WebPage">
@@ -876,43 +894,23 @@ $cards = $addCards->getAll();
         <div class="container-fluid px-0 align-items-center">
           <div class="row py-4 px-4 mt-3">
             <div class="col-12">
+              <a href="create-study-set.php">
               <button class="btn bg-gradient-primary btn-icon" type="button">
                 <div class="d-flex align-items-center">
                   <i class="fa fa-book me-2" aria-hidden="true"></i>
                   Practice
                 </div>
               </button>
+              </a>
               <button type="button" class="btn btn-outline-primary">Export</button>
             </div>
           </div>
         </div>
         <div class="col-8">
-
-          <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="true">
-            <div class="carousel-indicators mb-2">
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $cards['id'] ?>" class="active" aria-current="true" aria-label="Slide <?php echo $card['id'] ?>"></button>
-
-              <?php foreach ($cards as $card) {  ?>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $card['id'] ?>" aria-current="true" aria-label="Slide <?php echo $card['id'] ?>"></button>
-              <?php } ?>
-            </div>
-            <!-- First Card -->
-            <div class="carousel-inner">
-
-              <?php foreach ($cards as $card) {
-                if ($card['id'] === 1) { ?>
-                  <div class="carousel-item <?php if ($card['id'] === 1) {
-                                              echo "active";
-                                            } else {
-                                              echo "";
-                                            } ?>">
-                    <div class="card-wrapper">
-                      <input type="checkbox" id="card-<?php echo $card['id'] ?>" />
-                      <label class="col-md-4 card-container" for='card-<?php echo $card['id'] ?>'>
-                        <div class="card-flip mb-4">
-
-
-                          <!-- Card 3 Front -->
+        <form method="POST">
+          <?php 
+          foreach ($cards as $card){ 
+          ?>
                           <div id="card" class="card front">
                             <div class="card-block">
                               <div class="row">
@@ -924,97 +922,28 @@ $cards = $addCards->getAll();
                                 </div>
                               </div>
                               <div class="container card-title text-center" style="position: absolute">
-                                <h6>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt quae nulla odio dolorem eligendi architecto veritatis consectetur illum natus temporibus repudiandae minus inventore sunt quia porro repellat, quibusdam esse! Necessitatibus?</h6>
+                                <h6><?php echo $card['description'] ?></h6>
                               </div>
                               <div class="row justify-content-center mt-10">
-                                <button type="button" class="col-5 m-2 btn btn-outline-dark">Light</button>
-                                <button type="button" class="col-5 m-2 btn btn-outline-dark">Light</button>
-                                <button type="button" class="col-5 m-2 btn btn-outline-dark">Light</button>
-                                <button type="button" class="col-5 m-2 btn btn-outline-dark">Light</button>
+                              <div class="input-group mb-3">
+                                  <input type="text" class="form-control" name="<?php echo $card['id'] ?>" placeholder="Answer">
+                              </div>
                               </div>
                             </div>
                           </div>
-                          <!-- End Card 3 Front -->
-
-                          <!-- Card 3 Back -->
-                          <div class="card back text-center">
-                            <div class="card-block">
-                              <div class="row">
-                                <div class="col">
-                                  <h6 class="card-title text-start mx-4 my-3">1 / 9</h6>
-                                </div>
-                                <div class="col">
-                                  <p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i>
-                                </div>
-                              </div>
-                              <h2 class="card-title text-center mt-8 px-8"><?php echo $card['title'] ?></h2>
-                            </div>
-                          </div>
-
-                          <!-- End Card 3 Back -->
-
-
+            <?php } ?>
+            <input type="hidden" name="questions" value="<?php echo count($cards)?>">
+            <button type="submit" name="submit" class="btn btn-primary"> Submit </button> 
+          </form>
                         </div>
                       </label>
                     </div>
                   </div>
 
-                <?php } else {  ?>
-                  <div class="carousel-item">
-                    <div class="card-wrapper">
-                      <input type="checkbox" id="card-<?php echo $card['id'] ?>" />
-                      <label class="col-md-4 card-container" for='card-<?php echo $card['id'] ?>'>
-                        <div class="card-flip mb-4">
-
-
-                          <!-- Card 3 Front -->
-                          <div id="card" class="card front">
-                            <div class="card-block">
-                              <div class="row">
-                                <div class="col">
-                                  <h6 class="card-title text-start mx-4 my-3">1 / 9</h6>
-                                </div>
-                                <div class="col">
-                                  <p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i>
-                                </div>
-                              </div>
-                              <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
-                              <div class="row m-4 mx-8">
-                                <button type="button" class="col-6 btn btn-outline-dark">Light</button>
-                                <button type="button" class="col-6 ml-4 btn btn-outline-dark">Light</button>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- End Card 3 Front -->
-
-                          <!-- Card 3 Back -->
-                          <div class="card back text-center">
-                            <div class="card-block">
-                              <div class="row">
-                                <div class="col">
-                                  <h6 class="card-title text-start mx-4 my-3">1 / 9</h6>
-                                </div>
-                                <div class="col">
-                                  <p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i>
-                                </div>
-                              </div>
-                              <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
-                            </div>
-                          </div>
-
-                          <!-- End Card 3 Back -->
-
-
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-
-              <?php }
-              } ?>
             </div>
 
-            <!-- Indicators -->
+
+            <!-- Indicators
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Previous</span>
@@ -1023,7 +952,7 @@ $cards = $addCards->getAll();
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Next</span>
             </button>
-          </div>
+          </div> -->
 
           <style>
             #card {

@@ -896,7 +896,7 @@ $cards = $addCards->getAll();
 
           <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="true">
             <div class="carousel-indicators mb-2">
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $cards['id'] ?>" class="active" aria-current="true" aria-label="Slide <?php echo $card['id'] ?>"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $cards[0]['id'] ?>" class="active" aria-current="true" aria-label="Slide <?php echo $cards[0]['id'] ?>"></button>
 
               <?php foreach ($cards as $card) {  ?>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $card['id'] ?>" aria-current="true" aria-label="Slide <?php echo $card['id'] ?>"></button>

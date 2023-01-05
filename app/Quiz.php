@@ -68,7 +68,7 @@ class User
                 ':last_name' => $this->getLastName(),
                 ':username' => $this->getUsername(),
                 ':email_address' => $this->getEmailAddress(),
-                ':password' => md5($this->getPassword()),
+                ':password' => $this->getPassword()
             ]);
 
         } catch (Exception $e) {
@@ -84,7 +84,7 @@ class User
             $statement = $this->connection->prepare($sql);
             $statement->execute([
                 ':email_address' => $email_address,
-                ':password' => md5($password),
+                ':password' => $password
             ]);
 
             $row = $statement->fetch();

@@ -74,4 +74,15 @@ class Card
 			error_log($e->getMessage());
 		}
 	}
+
+	public function checkAnswers($card_set, $id, $answer)
+	{
+		try {
+			$sql = 'SELECT * FROM tb_cards';
+			$data = $this->connection->query($sql)->fetchAll();
+			return $data;
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
 }

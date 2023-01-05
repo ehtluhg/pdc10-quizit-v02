@@ -1,6 +1,6 @@
 <?php
 
 $host = 'localhost';
-$database = 'quizit_db';
+$database = 'db_quizit';
 $user = "root";
 $password = "";
