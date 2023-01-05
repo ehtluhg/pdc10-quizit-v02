@@ -888,7 +888,8 @@ $cards = $addCards->getAll();
                   Practice
                 </div>
               </button>
-              <button type="button" class="btn btn-outline-primary">Export</button>
+              <a href ="cards-to-pdf.php?card_set=<?php echo $cards[0]['set_id']?>
+              <button type="button" class="btn btn-outline-primary">Export</button></a>
             </div>
           </div>
         </div>
