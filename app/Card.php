@@ -75,6 +75,55 @@ class Card
 		}
 	}
 
+	public function edit($id)
+	{
+		try {
+			$sql = 'SELECT * FROM tb_cards WHERE id=:id';
+			$data = $this->connection->prepare($sql);
+			$data->execute([
+				':id' => $id
+			]);
+
+			$row = $data->fetch();
+
+			$this->id = $row['id'];
+			$this->id = $row['set_id'];
+			$this->id = $row['title'];
+			$this->id = $row['description'];
+
+			return $row;
+
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
+
+	public function update($id, $set_id, $title, $description)
+	{
+		try {
+			$sql = 'UPDATE tb_cards SET set_id=:set_id, title=:title, description=:description WHERE id=:id';
+			$data = $this->connection->prepare($sql);
+			$data->execute([
+				':id' => $id,
+				':set_id' => $set_id,
+				':title' => $title,
+				':description' => $description
+			]);
+
+			$row = $data->fetch();
+
+			$this->id = $row['id'];
+			$this->id = $row['set_id'];
+			$this->id = $row['title'];
+			$this->id = $row['description'];
+
+			return $row;
+
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
+
 	public function checkAnswers($card_set, $id, $answer)
 	{
 		try {

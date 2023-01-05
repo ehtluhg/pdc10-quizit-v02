@@ -4,33 +4,30 @@ require('init.php');
 
 use App\Card;
 
-$addCards = new Card('');
-$addCards->setConnection($connection);
-$cards = $addCards->getAll();
+$id = $_GET['id']; 
 
- if(isset($_POST['submit'])){ 
-  //check if form was submitted
-  try {
-    $score = 0;
-    foreach ($cards as $card){
-      $i = $card['id'];
-      $answer = $card['title'];
-      if ($answer == $_POST[$i]){
-        $score++;
-      }
-    }
-    $total = $_POST['questions'];
-    echo $score;
-    header("Location: quiz-results.php" . "?score=" . $score . "&total=" . $total); 
-  } catch (Exception $e) {
-      error_log($e->getMessage());
-  }
-}
+$editCard = new Card('');
+$editCard->setConnection($connection);
+$card = $editCard->edit($id);
+
 ?>
 
 <html lang="en" itemscope itemtype="http://schema.org/WebPage">
 
 <head>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -874,31 +871,60 @@ $cards = $addCards->getAll();
     <!-- main panel -->
     <div class="container">
       <div class="row">
-        <h1 class="d-flex justify-content-center mt-6"> [NAME OF SET] </h1>
+        <h1 class="d-flex justify-content-center mt-6"> Add Flashcards </h1>
         <hr>
       </div>
-      <div class="row justify-content-center">
-        <div class="container-fluid px-0 align-items-center">
+      <div class="row">
+        <div class="container-fluid px-0 overflow-hidden">
           <div class="row py-4 px-4 mt-3">
-            <div class="col-12">
-              <a href="create-study-set.php">
+            <div class="col-12 mx-auto">
+              <button class="btn bg-gradient-primary btn-icon" type="button">
+                <div class="d-flex align-items-center">
+                  <i class="fa fa-graduation-cap me-2" aria-hidden="true"></i>
+                  Quiz
+                </div>
+              </button>
               <button class="btn bg-gradient-primary btn-icon" type="button">
                 <div class="d-flex align-items-center">
                   <i class="fa fa-book me-2" aria-hidden="true"></i>
                   Practice
                 </div>
               </button>
-              </a>
               <button type="button" class="btn btn-outline-primary">Export</button>
             </div>
           </div>
         </div>
         <div class="col-8">
-        <form method="POST">
-          <?php 
-          foreach ($cards as $card){ 
-          ?>
+
+          <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="true">
+            <!-- First Card -->
+            <div class="carousel-inner">
+
+                  <div class="carousel-item active">
+                    <div class="card-wrapper">
+                      <input type="checkbox" id="card-<?php echo $card['id'] ?>" />
+                      <label class="col-md-4 card-container" for='card-<?php echo $card['id'] ?>'>
+                        <div class="card-flip mb-4">
+
+
+                          <!-- Card 3 Front -->
                           <div id="card" class="card front">
+                            <div class="card-block">
+                              <div class="row">
+                                <div class="col">
+                                  <h6 class="card-title text-start mx-4 my-3">1 / 9</h6>
+                                </div>
+                                <div class="col">
+                                  <a href="edit-study-set.php"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i></a> 
+                                </div>
+                              </div>
+                              <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
+                            </div>
+                          </div>
+                          <!-- End Card 3 Front -->
+
+                          <!-- Card 3 Back -->
+                          <div class="card back text-center">
                             <div class="card-block">
                               <div class="row">
                                 <div class="col">
@@ -908,38 +934,22 @@ $cards = $addCards->getAll();
                                   <p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i>
                                 </div>
                               </div>
-                              <div class="container card-title text-center" style="position: absolute">
-                                <h6><?php echo $card['description'] ?></h6>
-                              </div>
-                              <div class="row justify-content-center mt-10">
-                              <div class="input-group mb-3">
-                                  <input type="text" class="form-control" name="<?php echo $card['id'] ?>" placeholder="Answer">
-                              </div>
-                              </div>
+                              <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
                             </div>
                           </div>
-            <?php } ?>
-            <input type="hidden" name="questions" value="<?php echo count($cards)?>">
-            <button type="submit" name="submit" class="btn btn-primary"> Submit </button> 
-          </form>
+
+                          <!-- End Card 3 Back -->
+
+
                         </div>
                       </label>
                     </div>
                   </div>
 
+
             </div>
 
-
-            <!-- Indicators
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div> -->
+          </div>
 
           <style>
             #card {
@@ -981,6 +991,85 @@ $cards = $addCards->getAll();
           </style>
           <!-- End Card 3 -->
 
+          <!-- <div id="scene" class="scene">
+            <div id="card" class="card">
+              <div class="card__face card__face--front text-center">front</div>
+              <div id="back" class="card__face card__face--back text-center">back</div>
+            </div>
+          </div> -->
+
+          <!-- Semi-working flip animation -->
+          <!-- <div id="object" class="card shadow mb-5 bg-body rounded py-10">
+            <div class="card__face card-body text-center">
+              <h3 id="front" class="card-title">
+                PDC10
+              </h3>
+            </div>
+            <div class="card__face card-body text-center">
+              <h3 id="back" class="card-title">
+                Professional Domain Course 1
+              </h3>
+            </div>
+          </div> -->
+
+          <!-- <style>
+            #scene {
+              width: 800px;
+              height: 460px;
+              perspective: 1200px;
+            }
+
+            #card {
+              width: 100%;
+              height: 100%;
+              position: relative;
+              transition: transform 1s;
+              transform-style: preserve-3d;
+            }
+
+            .card__face {
+              position: absolute;
+              height: 100%;
+              width: 100%;
+              backface-visibility: hidden;
+            }
+
+            #back {
+              transform: rotateX(180deg);
+            }
+
+            #card.is-flipped {
+              transform: rotateX(180deg);
+            }
+          </style>
+
+          <script>
+            var card = document.querySelector('#card');
+            card.addEventListener('click', function () {
+              card.classList.toggle('is-flipped');
+            });
+          </script> -->
+
+          <!-- Text Boxes -->
+        </div>
+        <div class="col-4">
+          <form method="POST">
+            <div class="container ml-2">
+              <div class="mb-3">
+                <!-- placeholder value of 1 in set id !-->
+                <input type="hidden" class="form-control" name="set_id" value="<?php echo $card['set_id'] ?>">
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Term</label>
+                <input type="text" class="form-control" name="title" id="exampleFormControlInput1" placeholder="Information Technology" value="<?php echo $card['title'] ?>">
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Definition</label>
+                <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"><?php echo $card['description'] ?></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" name="card">Save</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -8434,25 +8523,6 @@ $cards = $addCards->getAll();
   </footer>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <!--   Core JS Files   -->
   <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
   <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
@@ -8532,46 +8602,17 @@ $cards = $addCards->getAll();
       };
     }
   </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 
 </html>
 
 <?php
 if (isset($_POST['card'])) {
-  $cardInfo = new Card($_POST['set_id'], $_POST['title'], $_POST['description']);
+  $cardInfo = new Card('');
   $cardInfo->setConnection($connection);
-  $cardInfo->save();
-  header("Location: card.php");
+  $cardInfo->update($id, $_POST['set_id'], $_POST['title'], $_POST['description']);
+//   header("Location: create-study-set.php");
+  echo "<script type='text/javascript'> document.location = 'create-study-set.php'; </script>";
   exit();
 }
 ?>
