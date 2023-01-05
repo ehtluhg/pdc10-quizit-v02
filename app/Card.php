@@ -111,7 +111,7 @@ class Card
 			]);
 
 			$row = $data->fetch();
-
+  
 			$this->id = $row['id'];
 			$this->id = $row['set_id'];
 			$this->id = $row['title'];

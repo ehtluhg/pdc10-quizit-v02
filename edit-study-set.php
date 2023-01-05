@@ -8611,7 +8611,6 @@ if (isset($_POST['card'])) {
   $cardInfo = new Card('');
   $cardInfo->setConnection($connection);
   $cardInfo->update($id, $_POST['set_id'], $_POST['title'], $_POST['description']);
-//   header("Location: create-study-set.php");
   echo "<script type='text/javascript'> document.location = 'create-study-set.php'; </script>";
   exit();
 }
