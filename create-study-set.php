@@ -927,8 +927,7 @@ $cards = $addCards->getAll();
                                   <h6 class="card-title text-start mx-4 my-3">1 / 9</h6>
                                 </div>
                                 <div class="col">
-                                  <p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i>
-                                </div>
+                                  <a href="edit-study-set.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></a>
                               </div>
                               <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
                             </div>
@@ -943,8 +942,8 @@ $cards = $addCards->getAll();
                                   <h6 class="card-title text-start mx-4 my-3">1 / 9</h6>
                                 </div>
                                 <div class="col">
-                                  <p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i>
-                                </div>
+                                  <a href="edit-study-set.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></a>
+                                </div>                                
                               </div>
                               <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
                             </div>
@@ -971,7 +970,7 @@ $cards = $addCards->getAll();
                             <div class="card-block">
                               <div class="row">
                                 <div class="col"><h6 class="card-title text-start mx-4 my-3">1 / 9</h6></div>
-                                <div class="col"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i></div>
+                                <div class="col"><a href="edit-study-set.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></a></div>
                               </div>
                               <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
                             </div>
@@ -983,8 +982,7 @@ $cards = $addCards->getAll();
                             <div class="card-block">
                               <div class="row">
                                 <div class="col"><h6 class="card-title text-start mx-4 my-3">1 / 9</h6></div>
-                                <div class="col"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i></div>
-                              </div>
+                                <div class="col"><a href="edit-study-set.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></a></div>                              </div>
                               <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
                             </div>
                           </div>
@@ -8681,36 +8679,6 @@ $cards = $addCards->getAll();
       };
     }
   </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 
 </html>
