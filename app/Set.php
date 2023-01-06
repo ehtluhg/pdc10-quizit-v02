@@ -37,5 +37,24 @@ class Set
 		$this->connection = $connection;
 	}
 
+	public function save($user_id, $set_name)
+	{
+		try {
+			$sql = "INSERT INTO tb_sets SET user_id=:user_id, set_name=:set_name";
+			$statement = $this->connection->prepare($sql);
+            $statement->execute([
+				':user_id' => $user_id,
+				':set_name' => $set_name
+			]);
+
+            $id = $this->connection->lastInsertId();
+
+            return $id;
+
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
+
 }
     ?>

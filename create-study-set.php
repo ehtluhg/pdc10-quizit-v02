@@ -2,11 +2,8 @@
 include('vendor/autoload.php');
 require('init.php');
 
-use App\Card;
+use App\Set;
 
-$addCards = new Card('');
-$addCards->setConnection($connection);
-$cards = $addCards->getAll();
 ?>
 
 <html lang="en" itemscope itemtype="http://schema.org/WebPage">
@@ -868,300 +865,25 @@ $cards = $addCards->getAll();
     <!-- main panel -->
     <div class="container">
       <div class="row">
-        <h1 class="d-flex justify-content-center mt-6"> Add Flashcards </h1>
+        <h1 class="d-flex justify-content-center mt-6"> Create Study Set </h1>
         <hr>
       </div>
       <div class="row">
-        <div class="container-fluid px-0 overflow-hidden">
-          <div class="row py-4 px-4 mt-3">
-            <div class="col-12 mx-auto">
-              <button class="btn bg-gradient-primary btn-icon" type="button">
-                <div class="d-flex align-items-center">
-                  <i class="fa fa-graduation-cap me-2" aria-hidden="true"></i>
-                  Quiz
-                </div>
-              </button>
-              <button class="btn bg-gradient-primary btn-icon" type="button">
-                <div class="d-flex align-items-center">
-                  <i class="fa fa-book me-2" aria-hidden="true"></i>
-                  Practice
-                </div>
-              </button>
-              <a href ="cards-to-pdf.php?card_set=<?php echo $cards[0]['set_id']?>
-              <button type="button" class="btn btn-outline-primary">Export</button></a>
-            </div>
-          </div>
-        </div>
-        <div class="col-8">
-
-          <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="true">
-            <div class="carousel-indicators mb-2">
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $cards[0]['id'] ?>" class="active" aria-current="true" aria-label="Slide <?php echo $cards[0]['id'] ?>"></button>
-
-              <?php foreach ($cards as $card) {  ?>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $card['id'] ?>" aria-current="true" aria-label="Slide <?php echo $card['id'] ?>"></button>
-              <?php } ?>
-            </div>
-            <!-- First Card -->
-            <div class="carousel-inner">
-
-              <?php foreach ($cards as $card) {
-                $i++;
-                if ($card['id'] === 1) {
-                  $i = 1; ?>
-                  <div class="carousel-item <?php if ($card['id'] === 1) {
-                                              echo "active";
-                                            } else {
-                                              echo "";
-                                            } ?>">
-                    <div class="card-wrapper">
-                      <input type="checkbox" id="card-<?php echo $card['id'] ?>" />
-                      <label class="col-md-4 card-container" for='card-<?php echo $card['id'] ?>'>
-                        <div class="card-flip mb-4">
-
-
-                          <!-- First Card (Front) -->
-                          <div id="card" class="card front">
-                            <div class="card-block">
-                              <div class="row">
-                                <div class="col">
-                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $i ?> / n</h6>
-                                </div>
-<<<<<<< HEAD
-                                <div class="col">
-                                  <a href="edit-study-card.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></a>
-                                  <a href="delete-study-card.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-trash mx-4 my-3"></i></p></a></div>
-                                </div>
-=======
-                              </div>
->>>>>>> e9405693d46f1972693396da8326123b027ac9da
-                              <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
-                              <div class="col">
-                                <a href="edit-study-set.php?id=<?php echo $card['id'] ?>">
-                                  <p class="text-center"><i class="fa fa-pencil-square-o mx-4 my-7"></i></p>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- End First Card (Front) -->
-
-                          <!-- First Card (Back) -->
-                          <div class="card back text-center">
-                            <div class="card-block">
-                              <div class="row">
-                                <div class="col">
-                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $card['id'] ?> / n</h6>
-                                </div>
-                              </div>
-                              <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
-                              <div class="col">
-                                <a href="edit-study-set.php?id=<?php echo $card['id'] ?>">
-                                  <p class="text-center"><i class="fa fa-pencil-square-o mx-4 pt-8"></i></p>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-
-                          <!-- End First Card (Back) -->
-
-
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-
-                <?php } else {
-                  $i == 2 ?>
-                  <div class="carousel-item">
-                    <div class="card-wrapper">
-                      <input type="checkbox" id="card-<?php echo $card['id'] ?>" />
-                      <label class="col-md-4 card-container" for='card-<?php echo $card['id'] ?>'>
-                        <div class="card-flip mb-4">
-
-
-                          <!-- Next Cards (Front) -->
-                          <div id="card" class="card front">
-                            <div class="card-block">
-                              <div class="row">
-<<<<<<< HEAD
-                                <div class="col"><h6 class="card-title text-start mx-4 my-3">1 / 9</h6></div>
-                                <div class="col"><a href="edit-study-card.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></a>
-                                <a href="delete-study-card.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-trash mx-4 my-3"></i></p></a></div>
-=======
-                                <div class="col">
-                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $i ?> / n</h6>
-                                </div>
->>>>>>> e9405693d46f1972693396da8326123b027ac9da
-                              </div>
-                              <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
-                              <div class="col">
-                                <a href="edit-study-set.php?id=<?php echo $card['id'] ?>">
-                                  <p class="text-center"><i class="fa fa-pencil-square-o mx-4 my-7"></i></p>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- End Next Cards (Front) -->
-
-                          <!-- Next Cards (Back) -->
-                          <div class="card back text-center">
-                            <div class="card-block">
-                              <div class="row">
-                                <div class="col">
-                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $card['id'] ?> / n</h6>
-                                </div>
-                              </div>
-                              <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
-                              <div class="col">
-                                <a href="edit-study-set.php?id=<?php echo $card['id'] ?>">
-                                  <p class="text-center"><i class="fa fa-pencil-square-o mx-4 pt-8"></i></p>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-
-                          <!-- End Next Cards (Back) -->
-
-
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-
-              <?php }
-              } ?>
-            </div>
-
-            <!-- Indicators -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-
-          <style>
-            #card {
-              margin: 10px 10px;
-              width: 800px;
-              height: 400px;
-            }
-
-            input[type='checkbox'] {
-              display: none;
-            }
-
-            /* Flip Cards CSS */
-
-            .card-flip {
-              display: grid;
-              grid-template-areas: "frontAndBack";
-              transform-style: preserve-3d;
-              transition: all 0.7s ease;
-            }
-
-            .card-flip div {
-              backface-visibility: hidden;
-              transform-style: preserve-3d;
-            }
-
-            .front {
-              grid-area: frontAndBack;
-            }
-
-            .back {
-              grid-area: frontAndBack;
-              transform: rotateX(-180deg);
-            }
-
-            input[type='checkbox']:checked+.card-container .card-flip {
-              transform: rotateX(180deg);
-            }
-          </style>
-          <!-- End Card 3 -->
-
-          <!-- <div id="scene" class="scene">
-            <div id="card" class="card">
-              <div class="card__face card__face--front text-center">front</div>
-              <div id="back" class="card__face card__face--back text-center">back</div>
-            </div>
-          </div> -->
-
-          <!-- Semi-working flip animation -->
-          <!-- <div id="object" class="card shadow mb-5 bg-body rounded py-10">
-            <div class="card__face card-body text-center">
-              <h3 id="front" class="card-title">
-                PDC10
-              </h3>
-            </div>
-            <div class="card__face card-body text-center">
-              <h3 id="back" class="card-title">
-                Professional Domain Course 1
-              </h3>
-            </div>
-          </div> -->
-
-          <!-- <style>
-            #scene {
-              width: 800px;
-              height: 460px;
-              perspective: 1200px;
-            }
-
-            #card {
-              width: 100%;
-              height: 100%;
-              position: relative;
-              transition: transform 1s;
-              transform-style: preserve-3d;
-            }
-
-            .card__face {
-              position: absolute;
-              height: 100%;
-              width: 100%;
-              backface-visibility: hidden;
-            }
-
-            #back {
-              transform: rotateX(180deg);
-            }
-
-            #card.is-flipped {
-              transform: rotateX(180deg);
-            }
-          </style>
-
-          <script>
-            var card = document.querySelector('#card');
-            card.addEventListener('click', function () {
-              card.classList.toggle('is-flipped');
-            });
-          </script> -->
-
-        </div>
-        <div class="col-4">
+        <div class="col-8">      
           <form method="POST">
             <div class="container ml-2">
               <div class="mb-3">
                 <!-- placeholder value of 1 in set id !-->
-                <input type="hidden" class="form-control" name="set_id" value="1">
+            
               </div>
               <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Term</label>
-                <input type="text" class="form-control" name="title" id="exampleFormControlInput1" placeholder="Information Technology">
+                <label for="exampleFormControlInput1" class="form-label">Set Title</label>
+                <input type="text" class="form-control" name="set_name" id="exampleFormControlInput1" placeholder="Title of Set">
+                <input type="hidden" class="form-control" name="user_id" id="exampleFormControlInput1" value="2">
               </div>
-              <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Definition</label>
-                <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary" name="card">Save</button>
+              <button type="submit" class="btn btn-primary" name="create">Create</button>
             </div>
           </form>
-        </div>
       </div>
     </div>
   </section>
@@ -8614,25 +8336,6 @@ $cards = $addCards->getAll();
   </footer>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <!--   Core JS Files   -->
   <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
   <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
@@ -8717,11 +8420,12 @@ $cards = $addCards->getAll();
 </html>
 
 <?php
-if (isset($_POST['card'])) {
-  $cardInfo = new Card($_POST['set_id'], $_POST['title'], $_POST['description']);
-  $cardInfo->setConnection($connection);
-  $cardInfo->save();
-  header("Location: card.php");
+if (isset($_POST['create'])) {
+
+  $setInfo = new Set('');
+  $setInfo->setConnection($connection);
+  $id = $setInfo->save($_POST['user_id'], $_POST['set_name']);
+  echo "<script type='text/javascript'> document.location = 'create-flash-cards.php?" . "set_id=" . $id . "'; </script>";
   exit();
 }
 ?>

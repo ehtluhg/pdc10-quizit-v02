@@ -161,4 +161,19 @@ class Card
             $cards = $statement->fetchAll();
 			return $cards;
 	}
+
+	public function getBySet($set_id)
+	{
+		try {
+			$sql = 'SELECT * FROM tb_cards WHERE set_id=:set_id';
+			$statement = $this->connection->prepare($sql);
+			$statement->execute([
+                ':set_id' => $set_id,
+            ]);
+			$cards = $statement->fetchAll();
+			return $cards;
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
 }
