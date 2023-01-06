@@ -2,22 +2,15 @@
 include('vendor/autoload.php');
 require('init.php');
 
-use App\User;
+$id = $_GET['id']; 
+$user_id = $_GET['user_id']; 
+use App\Set;
+$editSet = new Set('');
+$editSet->setConnection($connection);
+$set = $editSet->edit($id);
 
-$userId = $_GET['user_id'];
-$studentCards = new User('');
-$studentCards->setConnection($connection);
-$totalCards = new User('');
-$totalCards->setConnection($connection);
-$studentCards = $studentCards->getUserCardSet($userId);
-session_start();
-if (!isset($_SESSION['username'])) {
-  header('location: sign-in.php');
-}
 ?>
 
-
-<!DOCTYPE html>
 <html lang="en" itemscope itemtype="http://schema.org/WebPage">
 
 <head>
@@ -38,8 +31,8 @@ if (!isset($_SESSION['username'])) {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/favicon.png">
-  <link rel="shortcut icon" type="image/png" href="./assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
   <title>
 
@@ -56,18 +49,16 @@ if (!isset($_SESSION['username'])) {
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 
   <!-- Nucleo Icons -->
-  <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
 
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
 
   <!-- CSS Files -->
-
-
-
-  <link id="pagestyle" href="./assets/css/soft-design-system.css?v=1.0.9" rel="stylesheet" />
+  <link id="pagestyle" href="assets/css/soft-design-system.css?v=1.0.9" rel="stylesheet" />
+  <link href="assets/css/custom.css" rel="stylesheet" />
 
 
 
@@ -95,6 +86,11 @@ if (!isset($_SESSION['username'])) {
     .bg-gradient-primary {
       background-image: linear-gradient(310deg, #47e2d0, #47bde2);
     }
+
+    .form-control:focus {
+      border-color: #47bde2;
+      box-shadow: inset 0 1px 1px rgba(66, 196, 193, 0.075), 0 0 5px rgba(5, 202, 196, 0.6);
+    }
   </style>
 
   <!-- Navbar -->
@@ -103,8 +99,8 @@ if (!isset($_SESSION['username'])) {
       <div class="col-12">
         <nav class="navbar navbar-expand-lg  blur blur-rounded top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
           <div class="container-fluid px-0">
-            <a class="navbar-brand font-weight-bolder ms-sm-3" href="index.php" rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom" target="_blank">
-              <img src="./assets/img/QuizIt.png" width="65px" alt="down-arrow" class="arrow ms-1">
+            <a class="navbar-brand font-weight-bolder ms-sm-3" href="https://demos.creative-tim.com/soft-ui-design-system/index.html" rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom" target="_blank">
+              <img src="assets/img/QuizIt.png" width="65px" alt="down-arrow" class="arrow ms-1">
 
             </a>
             <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
@@ -119,7 +115,7 @@ if (!isset($_SESSION['username'])) {
                 <li class="nav-item dropdown dropdown-hover mx-2">
                   <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" href="javascript:;" id="dropdownMenuPages" data-bs-toggle="dropdown" aria-expanded="false">
                     Home
-                    <img src="./assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
+                    <img src="assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
                   </a>
                   <div class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3" aria-labelledby="dropdownMenuPages">
                     <div class="d-none d-lg-block">
@@ -144,13 +140,13 @@ if (!isset($_SESSION['username'])) {
                         </div>
                         Landing Pages
                       </div>
-                      <a href="./pages/about-us.html" class="dropdown-item border-radius-md">
+                      <a href="pages/about-us.html" class="dropdown-item border-radius-md">
                         <span class="ps-3">Home</span>
                       </a>
-                      <a href="./pages/contact-us.html" class="dropdown-item border-radius-md">
+                      <a href="pages/contact-us.html" class="dropdown-item border-radius-md">
                         <span class="ps-3">Study Sets</span>
                       </a>
-                      <!-- <a href="./pages/author.html" class="dropdown-item border-radius-md">
+                      <!-- <a href="pages/author.html" class="dropdown-item border-radius-md">
                       <span class="ps-3">Author</span>
                       </a> -->
                       <div class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center px-0 mt-3">
@@ -174,7 +170,7 @@ if (!isset($_SESSION['username'])) {
                         </div>
                         Account
                       </div>
-                      <a href="./pages/sign-in.html" class="dropdown-item border-radius-md">
+                      <a href="pages/sign-in.html" class="dropdown-item border-radius-md">
                         <span class="ps-3">Sign In</span>
                       </a>
                     </div>
@@ -202,13 +198,13 @@ if (!isset($_SESSION['username'])) {
                         Landing Pages
                       </div>
 
-                      <a href="./pages/about-us.html" class="dropdown-item border-radius-md">
+                      <a href="pages/about-us.html" class="dropdown-item border-radius-md">
                         <span class="ps-3">About Us</span>
                       </a>
-                      <a href="./pages/contact-us.html" class="dropdown-item border-radius-md">
+                      <a href="pages/contact-us.html" class="dropdown-item border-radius-md">
                         <span class="ps-3">Contact Us</span>
                       </a>
-                      <a href="./pages/author.html" class="dropdown-item border-radius-md">
+                      <a href="pages/author.html" class="dropdown-item border-radius-md">
                         <span class="ps-3">Author</span>
                       </a>
 
@@ -233,7 +229,7 @@ if (!isset($_SESSION['username'])) {
                         </div>
                         Account
                       </div>
-                      <a href="./pages/sign-in.html" class="dropdown-item border-radius-md">
+                      <a href="pages/sign-in.html" class="dropdown-item border-radius-md">
                         <span class="ps-3">Sign In</span>
                       </a>
 
@@ -245,12 +241,12 @@ if (!isset($_SESSION['username'])) {
                 <li class="nav-item dropdown dropdown-hover mx-2">
                   <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" href="javascript:;" id="dropdownMenuBlocks" data-bs-toggle="dropdown" aria-expanded="false">
                     Learn
-                    <img src="./assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1" />
+                    <img src="assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1" />
                   </a>
                   <ul class="dropdown-menu dropdown-menu-animation dropdown-lg dropdown-lg-responsive p-3 border-radius-lg mt-0 mt-lg-3" aria-labelledby="dropdownMenuBlocks">
                     <div class="d-none d-lg-block">
                       <li class="nav-item dropdown dropdown-hover dropdown-subitem">
-                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="./presentation.html">
+                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="presentation.html">
                           <div class="d-flex">
                             <div class="icon h-10 me-3 d-flex mt-1">
                               <i class="ni ni-single-copy-04 text-gradient text-primary"></i>
@@ -262,15 +258,15 @@ if (!isset($_SESSION['username'])) {
                                 <span class="text-sm">See all sections</span>
                               </div>
 
-                              <img src="./assets/img/down-arrow.svg" alt="down-arrow" class="arrow">
+                              <img src="assets/img/down-arrow.svg" alt="down-arrow" class="arrow">
                             </div>
                           </div>
                         </a>
                         <div class="dropdown-menu mt-0 py-3 px-2 mt-3">
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/page-sections/hero-sections.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/page-sections/hero-sections.html">
                             Page Headers
                           </a>
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/page-sections/features.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/page-sections/features.html">
                             Features
                           </a>
                         </div>
@@ -279,7 +275,7 @@ if (!isset($_SESSION['username'])) {
 
 
                       <li class="nav-item dropdown dropdown-hover dropdown-subitem">
-                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="./presentation.html">
+                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="presentation.html">
                           <div class="d-flex">
                             <div class="icon h-10 me-3 d-flex mt-1">
                               <i class="ni ni-laptop text-gradient text-primary"></i>
@@ -291,25 +287,25 @@ if (!isset($_SESSION['username'])) {
                                 <span class="text-sm">See all navigations</span>
                               </div>
 
-                              <img src="./assets/img/down-arrow.svg" alt="down-arrow" class="arrow">
+                              <img src="assets/img/down-arrow.svg" alt="down-arrow" class="arrow">
                             </div>
                           </div>
                         </a>
                         <div class="dropdown-menu mt-0 py-3 px-2 mt-3">
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/navigation/navbars.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/navigation/navbars.html">
                             Navbars
                           </a>
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/navigation/nav-tabs.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/navigation/nav-tabs.html">
                             Nav Tabs
                           </a>
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/navigation/pagination.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/navigation/pagination.html">
                             Pagination
                           </a>
                         </div>
                       </li>
 
                       <li class="nav-item dropdown dropdown-hover dropdown-subitem">
-                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="./presentation.html">
+                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="presentation.html">
                           <div class="d-flex">
                             <div class="icon h-10 me-3 d-flex mt-1">
                               <i class="ni ni-badge text-gradient text-primary"></i>
@@ -321,22 +317,22 @@ if (!isset($_SESSION['username'])) {
                                 <span class="text-sm">See all input areas</span>
                               </div>
 
-                              <img src="./assets/img/down-arrow.svg" alt="down-arrow" class="arrow">
+                              <img src="assets/img/down-arrow.svg" alt="down-arrow" class="arrow">
                             </div>
                           </div>
                         </a>
                         <div class="dropdown-menu mt-0 py-3 px-2 mt-3">
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/input-areas/inputs.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/input-areas/inputs.html">
                             Inputs
                           </a>
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/input-areas/forms.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/input-areas/forms.html">
                             Forms
                           </a>
                         </div>
                       </li>
 
                       <li class="nav-item dropdown dropdown-hover dropdown-subitem">
-                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="./presentation.html">
+                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="presentation.html">
                           <div class="d-flex">
                             <div class="icon h-10 me-3 d-flex mt-1">
                               <i class="ni ni-notification-70 text-gradient text-primary"></i>
@@ -348,25 +344,25 @@ if (!isset($_SESSION['username'])) {
                                 <span class="text-sm">See all examples</span>
                               </div>
 
-                              <img src="./assets/img/down-arrow.svg" alt="down-arrow" class="arrow">
+                              <img src="assets/img/down-arrow.svg" alt="down-arrow" class="arrow">
                             </div>
                           </div>
                         </a>
                         <div class="dropdown-menu mt-0 py-3 px-2 mt-3">
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/attention-catchers/alerts.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/attention-catchers/alerts.html">
                             Alerts
                           </a>
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/attention-catchers/modals.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/attention-catchers/modals.html">
                             Modals
                           </a>
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/attention-catchers/tooltips-popovers.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/attention-catchers/tooltips-popovers.html">
                             Tooltips & Popovers
                           </a>
                         </div>
                       </li>
 
                       <li class="nav-item dropdown dropdown-hover dropdown-subitem">
-                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="./presentation.html">
+                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="presentation.html">
                           <div class="d-flex">
                             <div class="icon h-10 me-3 d-flex mt-1">
                               <i class="ni ni-app text-gradient text-primary"></i>
@@ -378,33 +374,33 @@ if (!isset($_SESSION['username'])) {
                                 <span class="text-sm">See all elements</span>
                               </div>
 
-                              <img src="./assets/img/down-arrow.svg" alt="down-arrow" class="arrow">
+                              <img src="assets/img/down-arrow.svg" alt="down-arrow" class="arrow">
                             </div>
                           </div>
                         </a>
                         <div class="dropdown-menu mt-0 py-3 px-2 mt-3">
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/avatars.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/avatars.html">
                             Avatars
                           </a>
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/badges.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/badges.html">
                             Badges
                           </a>
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/breadcrumbs.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/breadcrumbs.html">
                             Breadcrumbs
                           </a>
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/buttons.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/buttons.html">
                             Buttons
                           </a>
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/dropdowns.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/dropdowns.html">
                             Dropdowns
                           </a>
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/progress-bars.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/progress-bars.html">
                             Progress Bars
                           </a>
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/toggles.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/toggles.html">
                             Toggles
                           </a>
-                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/typography.html">
+                          <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/typography.html">
                             Typography
                           </a>
                         </div>
@@ -424,10 +420,10 @@ if (!isset($_SESSION['username'])) {
                             </div>
                           </div>
                         </div>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/page-sections/hero-sections.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/page-sections/hero-sections.html">
                           Page Headers
                         </a>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/page-sections/features.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/page-sections/features.html">
                           Features
                         </a>
 
@@ -442,13 +438,13 @@ if (!isset($_SESSION['username'])) {
                             </div>
                           </div>
                         </div>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/navigation/navbars.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/navigation/navbars.html">
                           Navbars
                         </a>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/navigation/nav-tabs.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/navigation/nav-tabs.html">
                           Nav Tabs
                         </a>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/navigation/pagination.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/navigation/pagination.html">
                           Pagination
                         </a>
 
@@ -464,10 +460,10 @@ if (!isset($_SESSION['username'])) {
                             </div>
                           </div>
                         </div>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/input-areas/inputs.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/input-areas/inputs.html">
                           Inputs
                         </a>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/input-areas/forms.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/input-areas/forms.html">
                           Forms
                         </a>
 
@@ -483,13 +479,13 @@ if (!isset($_SESSION['username'])) {
                             </div>
                           </div>
                         </div>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/attention-catchers/alerts.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/attention-catchers/alerts.html">
                           Alerts
                         </a>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/attention-catchers/modals.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/attention-catchers/modals.html">
                           Modals
                         </a>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/attention-catchers/tooltips-popovers.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/attention-catchers/tooltips-popovers.html">
                           Tooltips & Popovers
                         </a>
 
@@ -505,28 +501,28 @@ if (!isset($_SESSION['username'])) {
                             </div>
                           </div>
                         </div>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/avatars.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/avatars.html">
                           Avatars
                         </a>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/badges.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/badges.html">
                           Badges
                         </a>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/breadcrumbs.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/breadcrumbs.html">
                           Breadcrumbs
                         </a>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/buttons.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/buttons.html">
                           Buttons
                         </a>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/dropdowns.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/dropdowns.html">
                           Dropdowns
                         </a>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/progress-bars.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/progress-bars.html">
                           Progress Bars
                         </a>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/toggles.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/toggles.html">
                           Toggles
                         </a>
-                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="./sections/elements/typography.html">
+                        <a class="dropdown-item ps-3 border-radius-md mb-1" href="sections/elements/typography.html">
                           Typography
                         </a>
                       </div>
@@ -538,7 +534,7 @@ if (!isset($_SESSION['username'])) {
                 <li class="nav-item dropdown dropdown-hover mx-2">
                   <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" href="javascript:;" id="dropdownMenuDocs" data-bs-toggle="dropdown" aria-expanded="false">
                     Profile
-                    <img src="./assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
+                    <img src="assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
                   </a>
                   <div class="dropdown-menu dropdown-menu-animation dropdown-lg mt-0 mt-lg-3 p-3 border-radius-lg" aria-labelledby="dropdownMenuDocs">
                     <div class="d-none d-lg-block">
@@ -689,7 +685,7 @@ if (!isset($_SESSION['username'])) {
 
                     <div class="row d-lg-none">
                       <div class="col-md-12 g-0">
-                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="./pages/about-us.html">
+                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="pages/about-us.html">
                           <div class="d-flex">
                             <div class="icon h-10 me-3 d-flex mt-1">
                               <svg class="text-secondary" width="16px" height="16px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -718,7 +714,7 @@ if (!isset($_SESSION['username'])) {
                           </div>
                         </a>
 
-                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="./pages/about-us.html">
+                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="pages/about-us.html">
                           <div class="d-flex">
                             <div class="icon h-10 me-3 d-flex mt-1">
                               <svg class="text-secondary" width="16px" height="16px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -744,7 +740,7 @@ if (!isset($_SESSION['username'])) {
                           </div>
                         </a>
 
-                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="./pages/about-us.html">
+                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="pages/about-us.html">
                           <div class="d-flex">
                             <div class="icon h-10 me-3 d-flex mt-1">
                               <svg class="text-secondary" width="16px" height="16px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -771,7 +767,7 @@ if (!isset($_SESSION['username'])) {
                           </div>
                         </a>
 
-                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="./pages/about-us.html">
+                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="pages/about-us.html">
                           <div class="d-flex">
                             <div class="icon h-10 me-3 d-flex mt-1">
                               <svg class="text-secondary" width="16px" height="16px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -797,7 +793,7 @@ if (!isset($_SESSION['username'])) {
                           </div>
                         </a>
 
-                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="./pages/about-us.html">
+                        <a class="dropdown-item py-2 ps-3 border-radius-md" href="pages/about-us.html">
                           <div class="d-flex">
                             <div class="icon h-10 me-3 d-flex mt-1">
                               <svg class="text-secondary" width="16px" height="16px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -830,17 +826,17 @@ if (!isset($_SESSION['username'])) {
                   </div>
                 </li>
                 <li class="nav-item ms-lg-auto">
-                  <a class="nav-link nav-link-icon me-2" href="https://github.com/creativetimofficial/soft-ui-design-system" target="_blank">
+                  <a class="nav-link nav-link-icon me-2" href="https://github.com/strcurseten/quizit" target="_blank">
                     <i class="fa fa-github me-1"></i>
                     <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Source Code on GitHub">GitHub</p>
                   </a>
                 </li>
                 <li class="nav-item my-auto ms-3 ms-lg-0">
-                  <a href="logout.php" class="btn btn-sm btn-outline-primary btn-round mb-0 me-1 mt-2 mt-md-0">Logout</a>
+                  <a href="https://www.creative-tim.com/builder/soft-ui-design-system" class="btn btn-sm btn-outline-primary btn-round mb-0 me-1 mt-2 mt-md-0">Login/Register</a>
                 </li>
                 <li class="nav-item my-auto ms-3 ms-lg-0">
 
-                  <a href="create-study-set.php" class="btn btn-sm  bg-gradient-primary  btn-round mb-0 me-1 mt-2 mt-md-0">Create Study Set</a>
+                  <a href="https://www.creative-tim.com/product/soft-ui-design-system-pro" class="btn btn-sm  bg-gradient-primary  btn-round mb-0 me-1 mt-2 mt-md-0">Create Study Set</a>
 
                 </li>
               </ul>
@@ -853,36 +849,45 @@ if (!isset($_SESSION['username'])) {
   </div>
 
 
-  <section class="mt-9 pt-3" id="count-stats">
-    <div class="container mt-9">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <section class="mt-5 pb-4" id="count-stats">
+    <!-- main panel -->
+    <div class="container">
       <div class="row">
-        <div class="col-lg-9 z-index-2 border-radius-xl mt-n10 mx-auto blur shadow-blur">
-          <div class="row">
-            <div class="col-12 justify-content-center">
-              <div class="p-3 mt-4 text-center justify-content-center">
-                <h1 class="text-gradient text-primary">Welcome, <?php echo $_SESSION['username'] ?>!</h1>
-                <!-- <h5 class="mt-3">Coded Elements</h5>
-                <p class="text-sm">From buttons, to inputs, navbars, alerts or cards, you are covered</p> -->
+        <h1 class="d-flex justify-content-center mt-6"> Edit Study Set </h1>
+        <hr>
+      </div>
+      <div class="row">
+        <div class="col-8">      
+          <form method="POST">
+            <div class="container ml-2">
+              <div class="mb-3">
+                <!-- placeholder value of 1 in set id !-->
+            
               </div>
-              <!-- <hr class="vertical dark"> -->
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Set Title</label>
+                <input type="text" class="form-control" name="set_name" id="exampleFormControlInput1" value="<?php echo $set['set_name'];?>">
+              </div>
+              <button type="submit" class="btn btn-primary" name="edit">Edit</button>
             </div>
-            <!-- <div class="col-md-4 position-relative">
-              <div class="p-3 text-center">
-                <h1 class="text-gradient text-primary"> <span id="state2" countTo="15">0</span>+</h1>
-                <h5 class="mt-3">Design Blocks</h5>
-                <p class="text-sm">Mix the sections, change the colors and unleash your creativity</p>
-              </div>
-              <hr class="vertical dark">
-            </div>
-            <div class="col-md-4">
-              <div class="p-3 text-center">
-                <h1 class="text-gradient text-primary" id="state3" countTo="4">0</h1>
-                <h5 class="mt-3">Pages</h5>
-                <p class="text-sm">Save 3-4 weeks of work when you use our pre-made pages for your website</p>
-              </div>
-            </div> -->
-          </div>
-        </div>
+          </form>
       </div>
     </div>
   </section>
@@ -908,39 +913,45 @@ if (!isset($_SESSION['username'])) {
           <p class="text-white opacity-8 mb-0">Recent</p>
         </div>
       </div>
-      <?php foreach ($studentCards as $studentCard) {
-        $set_id = $studentCard['id']; ?>
-        <div class="row">
-          <div class="card text-bg-light mb-3" style="max-width: 39rem; margin-right: 20px;">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <span class="text-start">
-                    <h5 class="card-title"><?php echo $studentCard['set_name'] ?></h5>
 
-                    <p class="card-text mb-5 text-muted"><?php $total = $totalCards->getTotalCards($set_id);
-                                                          echo $total['total_cards']; ?> terms</p>
-                  </span>
-                </div>
-                <div class="col">
-                  <p class="text-end">
-                    <a href="create-flash-cards.php?set_id=<?php echo $set_id ?>"><i class="fa fa-eye mx-2"></i></a>
-                    <a href="edit-study-set.php?id=<?php echo $set_id ?>&user_id=<?php echo $userId ?>"><i class="fa fa-pencil-square-o mx-2"></i></a>
-                    <a href="delete-study-set.php?id=<?php echo $set_id ?>&user_id=<?php echo $userId ?>"><i class="danger fa fa-trash mx-2"></i></a>
-                  </p>
-                </div>
-              </div>
-
-              <h6 class="card-title mt-5"><?php echo $studentCard['first_name'] . ' ' . $studentCard['last_name'] ?></h6>
-
-            </div>
-
+      <div class="row">
+        <div class="card text-bg-light mb-3" style="max-width: 39rem; margin-right: 20px;">
+          <div class="card-body">
+            <h5 class="card-title">Professional Domain Course 1</h5>
+            <p class="card-text mb-5">5 terms</p>
+            <h6 class="card-title mt-5">Gabriel Dy</h6>
           </div>
-        <?php } ?>
         </div>
 
+        <div class="card text-bg-light mb-3" style="max-width: 39rem;">
+          <div class="card-body">
+            <h5 class="card-title">Professional Domain Course 1</h5>
+            <p class="card-text mb-5">5 terms</p>
+            <h6 class="card-title mt-5">Gabriel Dy</h6>
+          </div>
+        </div>
+      </div>
 
-        <!-- <div class="row">
+      <div class="row">
+        <div class="card text-bg-light mb-3" style="max-width: 39rem; margin-right: 20px;">
+          <div class="card-body">
+            <h5 class="card-title">Professional Domain Course 1</h5>
+            <p class="card-text mb-5">5 terms</p>
+            <h6 class="card-title mt-5">Gabriel Dy</h6>
+          </div>
+        </div>
+
+        <div class="card text-bg-light mb-3" style="max-width: 39rem;">
+          <div class="card-body">
+            <h5 class="card-title">Professional Domain Course 1</h5>
+            <p class="card-text mb-5">5 terms</p>
+            <h6 class="card-title mt-5">Gabriel Dy</h6>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- <div class="row">
         <div class="col-lg-6 col-12">
           <div class="card card-profile-lg overflow-hidden">
             <div class="row">
@@ -968,7 +979,7 @@ if (!isset($_SESSION['username'])) {
               <div class="col-lg-4 col-md-6 col-12 pe-lg-0">
                 <a href="javascript:;">
                   <div class="p-3 pe-md-0">
-                    <img class="w-100 border-radius-md" src="../assets/img/bruce-mars.jpg" alt="image">
+                    <img class="w-100 border-radius-md" src="assets/img/bruce-mars.jpg" alt="image">
                   </div>
                 </a>
               </div>
@@ -1170,7 +1181,7 @@ if (!isset($_SESSION['username'])) {
                 </svg>
               </div>
               <h2 class="text-white up mb-0">Feel the <br /> Soft UI Design System</h2>
-              <a href=".//sections/elements/buttons.html" target="_blank" class="btn btn-outline-white mt-5 up btn-round">Start with Elements</a>
+              <a href="/sections/elements/buttons.html" target="_blank" class="btn btn-outline-white mt-5 up btn-round">Start with Elements</a>
             </div>
           </div>
         </div>
@@ -1577,8 +1588,8 @@ if (!isset($_SESSION['username'])) {
                     <iframe class="w-100 height-100" srcdoc='<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
           <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
           <!-- Nucleo Icons -->
-          <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
-          <link href="./assets/css/nucleo-svg.css" rel="stylesheet" /><link href="https://unpkg.com/soft-ui-design-system@1.0.4/assets/css/soft-design-system.min.css" rel="stylesheet" /><div class="container-fluid px-0 overflow-hidden">
+          <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+          <link href="assets/css/nucleo-svg.css" rel="stylesheet" /><link href="https://unpkg.com/soft-ui-design-system@1.0.4/assets/css/soft-design-system.min.css" rel="stylesheet" /><div class="container-fluid px-0 overflow-hidden">
   <div class="row text-center py-2 mt-3">
     <div class="col-12 mx-auto">
       <button class="btn bg-gradient-primary btn-icon btn-sm" type="button">
@@ -1986,23 +1997,23 @@ if (!isset($_SESSION['username'])) {
     <div class="col-12">
       <div class="avatar-group">
         <a href="javascript:;" class="avatar avatar-lg rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-          <img alt="Image placeholder" src="./assets/img/team-1.jpg">
+          <img alt="Image placeholder" src="assets/img/team-1.jpg">
         </a>
         <a href="javascript:;" class="avatar avatar-lg rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-          <img alt="Image placeholder" src="./assets/img/team-2.jpg">
+          <img alt="Image placeholder" src="assets/img/team-2.jpg">
         </a>
         <a href="javascript:;" class="avatar avatar-lg rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Alexander Smith">
-          <img alt="Image placeholder" src="./assets/img/team-3.jpg">
+          <img alt="Image placeholder" src="assets/img/team-3.jpg">
         </a>
         <a href="javascript:;" class="avatar avatar-lg rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-          <img alt="Image placeholder" src="./assets/img/team-4.jpg">
+          <img alt="Image placeholder" src="assets/img/team-4.jpg">
         </a>
       </div>
     </div>
   </div>
 </div>
-          <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-          <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
           <script src="?v=1.0.9" type="text/javascript"></script>
           '></iframe>
                   </div>
@@ -2015,16 +2026,16 @@ if (!isset($_SESSION['username'])) {
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-12"</span><span class="nt">&gt;</span>
       <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"avatar-group"</span><span class="nt">&gt;</span>
         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"javascript:;"</span> <span class="na">class=</span><span class="s">"avatar avatar-lg rounded-circle"</span> <span class="na">data-bs-toggle=</span><span class="s">"tooltip"</span> <span class="na">data-bs-placement=</span><span class="s">"bottom"</span> <span class="na">title=</span><span class="s">"Ryan Tompson"</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"./assets/img/team-1.jpg"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"assets/img/team-1.jpg"</span><span class="nt">&gt;</span>
         <span class="nt">&lt;/a&gt;</span>
         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"javascript:;"</span> <span class="na">class=</span><span class="s">"avatar avatar-lg rounded-circle"</span> <span class="na">data-bs-toggle=</span><span class="s">"tooltip"</span> <span class="na">data-bs-placement=</span><span class="s">"bottom"</span> <span class="na">title=</span><span class="s">"Romina Hadid"</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"./assets/img/team-2.jpg"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"assets/img/team-2.jpg"</span><span class="nt">&gt;</span>
         <span class="nt">&lt;/a&gt;</span>
         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"javascript:;"</span> <span class="na">class=</span><span class="s">"avatar avatar-lg rounded-circle"</span> <span class="na">data-bs-toggle=</span><span class="s">"tooltip"</span> <span class="na">data-bs-placement=</span><span class="s">"bottom"</span> <span class="na">title=</span><span class="s">"Alexander Smith"</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"./assets/img/team-3.jpg"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"assets/img/team-3.jpg"</span><span class="nt">&gt;</span>
         <span class="nt">&lt;/a&gt;</span>
         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"javascript:;"</span> <span class="na">class=</span><span class="s">"avatar avatar-lg rounded-circle"</span> <span class="na">data-bs-toggle=</span><span class="s">"tooltip"</span> <span class="na">data-bs-placement=</span><span class="s">"bottom"</span> <span class="na">title=</span><span class="s">"Jessica Doe"</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"./assets/img/team-4.jpg"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"assets/img/team-4.jpg"</span><span class="nt">&gt;</span>
         <span class="nt">&lt;/a&gt;</span>
       <span class="nt">&lt;/div&gt;</span>
     <span class="nt">&lt;/div&gt;</span>
@@ -2071,26 +2082,26 @@ if (!isset($_SESSION['username'])) {
   <div class="row text-center py-3 mt-3">
     <div class="col-12">
       <a href="javascript:;" class="avatar avatar-xs rounded-circle">
-        <img alt="Image placeholder" src="./assets/img/team-4.jpg">
+        <img alt="Image placeholder" src="assets/img/team-4.jpg">
       </a>
       <a href="javascript:;" class="avatar avatar-sm rounded-circle">
-        <img alt="Image placeholder" src="./assets/img/team-4.jpg">
+        <img alt="Image placeholder" src="assets/img/team-4.jpg">
       </a>
       <a href="javascript:;" class="avatar rounded-circle">
-        <img alt="Image placeholder" src="./assets/img/team-4.jpg">
+        <img alt="Image placeholder" src="assets/img/team-4.jpg">
       </a>
       <a href="javascript:;" class="avatar avatar-lg rounded-circle">
-        <img alt="Image placeholder" src="./assets/img/team-4.jpg">
+        <img alt="Image placeholder" src="assets/img/team-4.jpg">
       </a>
       <a href="javascript:;" class="avatar avatar-xl rounded-circle">
-        <img alt="Image placeholder" src="./assets/img/team-4.jpg">
+        <img alt="Image placeholder" src="assets/img/team-4.jpg">
       </a>
     </div>
   </div>
 </div>
 
-          <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-          <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
           <script src="?v=1.0.9" type="text/javascript"></script>
           '></iframe>
                   </div>
@@ -2102,19 +2113,19 @@ if (!isset($_SESSION['username'])) {
   <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row text-center py-3 mt-3"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-12"</span><span class="nt">&gt;</span>
       <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"javascript:;"</span> <span class="na">class=</span><span class="s">"avatar avatar-xs rounded-circle"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"./assets/img/team-4.jpg"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"assets/img/team-4.jpg"</span><span class="nt">&gt;</span>
       <span class="nt">&lt;/a&gt;</span>
       <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"javascript:;"</span> <span class="na">class=</span><span class="s">"avatar avatar-sm rounded-circle"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"./assets/img/team-4.jpg"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"assets/img/team-4.jpg"</span><span class="nt">&gt;</span>
       <span class="nt">&lt;/a&gt;</span>
       <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"javascript:;"</span> <span class="na">class=</span><span class="s">"avatar rounded-circle"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"./assets/img/team-4.jpg"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"assets/img/team-4.jpg"</span><span class="nt">&gt;</span>
       <span class="nt">&lt;/a&gt;</span>
       <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"javascript:;"</span> <span class="na">class=</span><span class="s">"avatar avatar-lg rounded-circle"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"./assets/img/team-4.jpg"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"assets/img/team-4.jpg"</span><span class="nt">&gt;</span>
       <span class="nt">&lt;/a&gt;</span>
       <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"javascript:;"</span> <span class="na">class=</span><span class="s">"avatar avatar-xl rounded-circle"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"./assets/img/team-4.jpg"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">"Image placeholder"</span> <span class="na">src=</span><span class="s">"assets/img/team-4.jpg"</span><span class="nt">&gt;</span>
       <span class="nt">&lt;/a&gt;</span>
     <span class="nt">&lt;/div&gt;</span>
   <span class="nt">&lt;/div&gt;</span>
@@ -2162,8 +2173,8 @@ if (!isset($_SESSION['username'])) {
           <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
           <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
           <!-- Nucleo Icons -->
-          <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
-          <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+          <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+          <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
           <link id="pagestyle" href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/soft-design-system.min.css?v=1.0.9" rel="stylesheet" />
           <div class="container py-2 mt-2 overflow-hidden">
   <div class="row">
@@ -2813,8 +2824,8 @@ if (!isset($_SESSION['username'])) {
   </div>
 </div>
 
-          <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-          <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
           <script>
             var tooltipTriggerList = [].slice.call(document.querySelectorAll(&#39;[data-bs-toggle="tooltip"]&#39;))
           var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -2911,8 +2922,8 @@ if (!isset($_SESSION['username'])) {
   </div>
 </div>
 
-          <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-          <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
           <script>var popoverTriggerList = [].slice.call(document.querySelectorAll(&#39;[data-bs-toggle="popover"]&#39;))
           var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
             return new bootstrap.Popover(popoverTriggerEl)
@@ -3024,7 +3035,7 @@ if (!isset($_SESSION['username'])) {
   </div>
 </div>
 
-          <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
           '></iframe>
                   </div>
                   <div class="tab-pane" id="code-modal">
@@ -3105,8 +3116,8 @@ if (!isset($_SESSION['username'])) {
           <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
           <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
           <!-- Nucleo Icons -->
-          <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
-          <link href="./assets/css/nucleo-svg.css" rel="stylesheet" /><link href="https://unpkg.com/soft-ui-design-system@1.0.4/assets/css/soft-design-system.min.css" rel="stylesheet" /><!--  Datepicker -->
+          <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+          <link href="assets/css/nucleo-svg.css" rel="stylesheet" /><link href="https://unpkg.com/soft-ui-design-system@1.0.4/assets/css/soft-design-system.min.css" rel="stylesheet" /><!--  Datepicker -->
 <div class="row py-3">
   <div class="col-md-6 mx-auto">
     <div class="row">
@@ -3120,9 +3131,9 @@ if (!isset($_SESSION['username'])) {
   </div>
 </div>
 
-          <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-          <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
-          <script src="./assets/js/plugins/flatpickr.min.js"></script><script href="https://unpkg.com/soft-ui-design-system@1.0.4/assets/js/soft-design-system.min.js" rel="stylesheet"></script><script>
+          <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+          <script src="assets/js/plugins/flatpickr.min.js"></script><script href="https://unpkg.com/soft-ui-design-system@1.0.4/assets/js/soft-design-system.min.js" rel="stylesheet"></script><script>
             if (document.querySelector(".datepicker")) {
               flatpickr(".datepicker", {});
             }
@@ -3223,7 +3234,7 @@ if (!isset($_SESSION['username'])) {
         <li class="nav-item dropdown dropdown-hover mx-2 ms-lg-5">
           <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" id="dropdownMenuPages1" data-bs-toggle="dropdown" aria-expanded="false">
             Pages
-            <img src="./assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
+            <img src="assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
           </a>
           <div class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3" aria-labelledby="dropdownMenuPages1">
             <div class="d-none d-lg-block">
@@ -3262,12 +3273,12 @@ if (!isset($_SESSION['username'])) {
         <li class="nav-item dropdown dropdown-hover mx-2">
           <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" id="dropdownMenuBlocks" data-bs-toggle="dropdown" aria-expanded="false">
             Blocks
-            <img src="./assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
+            <img src="assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
           </a>
           <ul class="dropdown-menu dropdown-menu-animation dropdown-lg dropdown-lg-responsive p-3 border-radius-lg mt-0 mt-lg-3" aria-labelledby="dropdownMenuBlocks">
             <div class="d-none d-lg-block">
   <li class="nav-item dropdown dropdown-hover dropdown-subitem">
-    <a class="dropdown-item py-2 ps-3 border-radius-md" href="./presentation.html">
+    <a class="dropdown-item py-2 ps-3 border-radius-md" href="presentation.html">
       <div class="d-flex">
         <div class="icon h-10 me-3 d-flex mt-1">
           <i class="ni ni-single-copy-04 text-gradient text-primary"></i>
@@ -3278,7 +3289,7 @@ if (!isset($_SESSION['username'])) {
             <span class="text-sm">See all 109 sections</span>
           </div>
 
-          <img src="./assets/img/down-arrow.svg" alt="down-arrow" class="arrow"/>
+          <img src="assets/img/down-arrow.svg" alt="down-arrow" class="arrow"/>
         </div>
       </div>
     </a>
@@ -3368,7 +3379,7 @@ if (!isset($_SESSION['username'])) {
         <li class="nav-item dropdown dropdown-hover mx-2">
           <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" id="dropdownMenuDocs" data-bs-toggle="dropdown" aria-expanded="false">
             Docs
-            <img src="./assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
+            <img src="assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
           </a>
           <ul class="dropdown-menu dropdown-menu-animation dropdown-lg mt-0 mt-lg-3 p-3 border-radius-lg" aria-labelledby="dropdownMenuDocs">
             <div class="d-none d-lg-block">
@@ -3641,7 +3652,7 @@ if (!isset($_SESSION['username'])) {
 </nav>
 <!-- End Navbar -->
 
-          <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
           '></iframe>
                   </div>
                   <div class="tab-pane" id="code-nav-light">
@@ -3666,7 +3677,7 @@ if (!isset($_SESSION['username'])) {
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover mx-2 ms-lg-5"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"</span> <span class="na">id=</span><span class="s">"dropdownMenuPages1"</span> <span class="na">data-bs-toggle=</span><span class="s">"dropdown"</span> <span class="na">aria-expanded=</span><span class="s">"false"</span><span class="nt">&gt;</span>
             Pages
-            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;/a&gt;</span>
           <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3"</span> <span class="na">aria-labelledby=</span><span class="s">"dropdownMenuPages1"</span><span class="nt">&gt;</span>
             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-none d-lg-block"</span><span class="nt">&gt;</span>
@@ -3705,12 +3716,12 @@ if (!isset($_SESSION['username'])) {
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover mx-2"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"</span> <span class="na">id=</span><span class="s">"dropdownMenuBlocks"</span> <span class="na">data-bs-toggle=</span><span class="s">"dropdown"</span> <span class="na">aria-expanded=</span><span class="s">"false"</span><span class="nt">&gt;</span>
             Blocks
-            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;/a&gt;</span>
           <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"dropdown-menu dropdown-menu-animation dropdown-lg dropdown-lg-responsive p-3 border-radius-lg mt-0 mt-lg-3"</span> <span class="na">aria-labelledby=</span><span class="s">"dropdownMenuBlocks"</span><span class="nt">&gt;</span>
             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-none d-lg-block"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover dropdown-subitem"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"dropdown-item py-2 ps-3 border-radius-md"</span> <span class="na">href=</span><span class="s">"./presentation.html"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"dropdown-item py-2 ps-3 border-radius-md"</span> <span class="na">href=</span><span class="s">"presentation.html"</span><span class="nt">&gt;</span>
       <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-flex"</span><span class="nt">&gt;</span>
         <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"icon h-10 me-3 d-flex mt-1"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;i</span> <span class="na">class=</span><span class="s">"ni ni-single-copy-04 text-gradient text-primary"</span><span class="nt">&gt;&lt;/i&gt;</span>
@@ -3721,7 +3732,7 @@ if (!isset($_SESSION['username'])) {
             <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"text-sm"</span><span class="nt">&gt;</span>See all 109 sections<span class="nt">&lt;/span&gt;</span>
           <span class="nt">&lt;/div&gt;</span>
 
-          <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow"</span><span class="nt">/&gt;</span>
         <span class="nt">&lt;/div&gt;</span>
       <span class="nt">&lt;/div&gt;</span>
     <span class="nt">&lt;/a&gt;</span>
@@ -3811,7 +3822,7 @@ if (!isset($_SESSION['username'])) {
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover mx-2"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"</span> <span class="na">id=</span><span class="s">"dropdownMenuDocs"</span> <span class="na">data-bs-toggle=</span><span class="s">"dropdown"</span> <span class="na">aria-expanded=</span><span class="s">"false"</span><span class="nt">&gt;</span>
             Docs
-            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;/a&gt;</span>
           <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"dropdown-menu dropdown-menu-animation dropdown-lg mt-0 mt-lg-3 p-3 border-radius-lg"</span> <span class="na">aria-labelledby=</span><span class="s">"dropdownMenuDocs"</span><span class="nt">&gt;</span>
             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-none d-lg-block"</span><span class="nt">&gt;</span>
@@ -4140,7 +4151,7 @@ if (!isset($_SESSION['username'])) {
         <li class="nav-item dropdown dropdown-hover mx-2">
           <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" id="dropdownMenuPages0" data-bs-toggle="dropdown" aria-expanded="false">
             Pages
-            <img src="./assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-1">
+            <img src="assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-1">
           </a>
           <div class="dropdown-menu dropdown-menu-animation dropdown-xl p-3 border-radius-xl mt-0 mt-lg-3" aria-labelledby="dropdownMenuPages0">
             <div class="d-none d-lg-block">
@@ -4179,12 +4190,12 @@ if (!isset($_SESSION['username'])) {
         <li class="nav-item dropdown dropdown-hover mx-2">
           <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" id="dropdownMenuBlocks" data-bs-toggle="dropdown" aria-expanded="false">
             Blocks
-            <img src="./assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-1">
+            <img src="assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-1">
           </a>
           <ul class="dropdown-menu dropdown-menu-animation dropdown-lg dropdown-lg-responsive p-3 border-radius-lg mt-0 mt-lg-3" aria-labelledby="dropdownMenuBlocks">
             <div class="d-none d-lg-block">
   <li class="nav-item dropdown dropdown-hover dropdown-subitem">
-    <a class="dropdown-item py-2 ps-3 border-radius-md" href="./presentation.html">
+    <a class="dropdown-item py-2 ps-3 border-radius-md" href="presentation.html">
       <div class="d-flex">
         <div class="icon h-10 me-3 d-flex mt-1">
           <i class="ni ni-single-copy-04 text-gradient text-primary"></i>
@@ -4195,7 +4206,7 @@ if (!isset($_SESSION['username'])) {
             <span class="text-sm">See all 109 sections</span>
           </div>
 
-          <img src="./assets/img/down-arrow.svg" alt="down-arrow" class="arrow"/>
+          <img src="assets/img/down-arrow.svg" alt="down-arrow" class="arrow"/>
         </div>
       </div>
     </a>
@@ -4285,7 +4296,7 @@ if (!isset($_SESSION['username'])) {
         <li class="nav-item dropdown dropdown-hover mx-2">
           <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" id="dropdownMenuDocs" data-bs-toggle="dropdown" aria-expanded="false">
             Docs
-            <img src="./assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-1">
+            <img src="assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-1">
           </a>
           <ul class="dropdown-menu dropdown-menu-animation dropdown-lg mt-0 mt-lg-3 p-3 border-radius-lg" aria-labelledby="dropdownMenuDocs">
             <div class="d-none d-lg-block">
@@ -4558,7 +4569,7 @@ if (!isset($_SESSION['username'])) {
 </nav>
 <!-- End Navbar -->
 
-          <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
           '></iframe>
                   </div>
                   <div class="tab-pane" id="code-nav-dark">
@@ -4583,7 +4594,7 @@ if (!isset($_SESSION['username'])) {
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover mx-2"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"</span> <span class="na">id=</span><span class="s">"dropdownMenuPages0"</span> <span class="na">data-bs-toggle=</span><span class="s">"dropdown"</span> <span class="na">aria-expanded=</span><span class="s">"false"</span><span class="nt">&gt;</span>
             Pages
-            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow-white.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow-white.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;/a&gt;</span>
           <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"dropdown-menu dropdown-menu-animation dropdown-xl p-3 border-radius-xl mt-0 mt-lg-3"</span> <span class="na">aria-labelledby=</span><span class="s">"dropdownMenuPages0"</span><span class="nt">&gt;</span>
             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-none d-lg-block"</span><span class="nt">&gt;</span>
@@ -4622,12 +4633,12 @@ if (!isset($_SESSION['username'])) {
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover mx-2"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"</span> <span class="na">id=</span><span class="s">"dropdownMenuBlocks"</span> <span class="na">data-bs-toggle=</span><span class="s">"dropdown"</span> <span class="na">aria-expanded=</span><span class="s">"false"</span><span class="nt">&gt;</span>
             Blocks
-            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow-white.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow-white.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;/a&gt;</span>
           <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"dropdown-menu dropdown-menu-animation dropdown-lg dropdown-lg-responsive p-3 border-radius-lg mt-0 mt-lg-3"</span> <span class="na">aria-labelledby=</span><span class="s">"dropdownMenuBlocks"</span><span class="nt">&gt;</span>
             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-none d-lg-block"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover dropdown-subitem"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"dropdown-item py-2 ps-3 border-radius-md"</span> <span class="na">href=</span><span class="s">"./presentation.html"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"dropdown-item py-2 ps-3 border-radius-md"</span> <span class="na">href=</span><span class="s">"presentation.html"</span><span class="nt">&gt;</span>
       <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-flex"</span><span class="nt">&gt;</span>
         <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"icon h-10 me-3 d-flex mt-1"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;i</span> <span class="na">class=</span><span class="s">"ni ni-single-copy-04 text-gradient text-primary"</span><span class="nt">&gt;&lt;/i&gt;</span>
@@ -4638,7 +4649,7 @@ if (!isset($_SESSION['username'])) {
             <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"text-sm"</span><span class="nt">&gt;</span>See all 109 sections<span class="nt">&lt;/span&gt;</span>
           <span class="nt">&lt;/div&gt;</span>
 
-          <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow"</span><span class="nt">/&gt;</span>
         <span class="nt">&lt;/div&gt;</span>
       <span class="nt">&lt;/div&gt;</span>
     <span class="nt">&lt;/a&gt;</span>
@@ -4728,7 +4739,7 @@ if (!isset($_SESSION['username'])) {
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover mx-2"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"</span> <span class="na">id=</span><span class="s">"dropdownMenuDocs"</span> <span class="na">data-bs-toggle=</span><span class="s">"dropdown"</span> <span class="na">aria-expanded=</span><span class="s">"false"</span><span class="nt">&gt;</span>
             Docs
-            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow-white.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow-white.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;/a&gt;</span>
           <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"dropdown-menu dropdown-menu-animation dropdown-lg mt-0 mt-lg-3 p-3 border-radius-lg"</span> <span class="na">aria-labelledby=</span><span class="s">"dropdownMenuDocs"</span><span class="nt">&gt;</span>
             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-none d-lg-block"</span><span class="nt">&gt;</span>
@@ -5059,7 +5070,7 @@ if (!isset($_SESSION['username'])) {
         <li class="nav-item dropdown dropdown-hover mx-2">
           <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" id="dropdownMenuPages" data-bs-toggle="dropdown" aria-expanded="false">
             Pages
-            <img src="./assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
+            <img src="assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
           </a>
           <div class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3" aria-labelledby="dropdownMenuPages">
             <div class="d-none d-lg-block">
@@ -5098,12 +5109,12 @@ if (!isset($_SESSION['username'])) {
         <li class="nav-item dropdown dropdown-hover mx-2">
           <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" id="dropdownMenuBlocks" data-bs-toggle="dropdown" aria-expanded="false">
             Blocks
-            <img src="./assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
+            <img src="assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
           </a>
           <ul class="dropdown-menu dropdown-menu-animation dropdown-lg dropdown-lg-responsive p-3 border-radius-lg mt-0 mt-lg-3" aria-labelledby="dropdownMenuBlocks">
             <div class="d-none d-lg-block">
   <li class="nav-item dropdown dropdown-hover dropdown-subitem">
-    <a class="dropdown-item py-2 ps-3 border-radius-md" href="./presentation.html">
+    <a class="dropdown-item py-2 ps-3 border-radius-md" href="presentation.html">
       <div class="d-flex">
         <div class="icon h-10 me-3 d-flex mt-1">
           <i class="ni ni-single-copy-04 text-gradient text-primary"></i>
@@ -5114,7 +5125,7 @@ if (!isset($_SESSION['username'])) {
             <span class="text-sm">See all 109 sections</span>
           </div>
 
-          <img src="./assets/img/down-arrow.svg" alt="down-arrow" class="arrow"/>
+          <img src="assets/img/down-arrow.svg" alt="down-arrow" class="arrow"/>
         </div>
       </div>
     </a>
@@ -5204,7 +5215,7 @@ if (!isset($_SESSION['username'])) {
         <li class="nav-item dropdown dropdown-hover mx-2">
           <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" id="dropdownMenuDocs" data-bs-toggle="dropdown" aria-expanded="false">
             Docs
-            <img src="./assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
+            <img src="assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1">
           </a>
           <ul class="dropdown-menu dropdown-menu-animation dropdown-lg mt-0 mt-lg-3 p-3 border-radius-lg" aria-labelledby="dropdownMenuDocs">
             <div class="d-none d-lg-block">
@@ -5479,7 +5490,7 @@ if (!isset($_SESSION['username'])) {
 </div></div></div>
 
           </div>
-          <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
           '></iframe>
                   </div>
                   <div class="tab-pane" id="code-nav-blur">
@@ -5505,7 +5516,7 @@ if (!isset($_SESSION['username'])) {
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover mx-2"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"</span> <span class="na">id=</span><span class="s">"dropdownMenuPages"</span> <span class="na">data-bs-toggle=</span><span class="s">"dropdown"</span> <span class="na">aria-expanded=</span><span class="s">"false"</span><span class="nt">&gt;</span>
             Pages
-            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;/a&gt;</span>
           <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3"</span> <span class="na">aria-labelledby=</span><span class="s">"dropdownMenuPages"</span><span class="nt">&gt;</span>
             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-none d-lg-block"</span><span class="nt">&gt;</span>
@@ -5544,12 +5555,12 @@ if (!isset($_SESSION['username'])) {
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover mx-2"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"</span> <span class="na">id=</span><span class="s">"dropdownMenuBlocks"</span> <span class="na">data-bs-toggle=</span><span class="s">"dropdown"</span> <span class="na">aria-expanded=</span><span class="s">"false"</span><span class="nt">&gt;</span>
             Blocks
-            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;/a&gt;</span>
           <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"dropdown-menu dropdown-menu-animation dropdown-lg dropdown-lg-responsive p-3 border-radius-lg mt-0 mt-lg-3"</span> <span class="na">aria-labelledby=</span><span class="s">"dropdownMenuBlocks"</span><span class="nt">&gt;</span>
             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-none d-lg-block"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover dropdown-subitem"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"dropdown-item py-2 ps-3 border-radius-md"</span> <span class="na">href=</span><span class="s">"./presentation.html"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"dropdown-item py-2 ps-3 border-radius-md"</span> <span class="na">href=</span><span class="s">"presentation.html"</span><span class="nt">&gt;</span>
       <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-flex"</span><span class="nt">&gt;</span>
         <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"icon h-10 me-3 d-flex mt-1"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;i</span> <span class="na">class=</span><span class="s">"ni ni-single-copy-04 text-gradient text-primary"</span><span class="nt">&gt;&lt;/i&gt;</span>
@@ -5560,7 +5571,7 @@ if (!isset($_SESSION['username'])) {
             <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"text-sm"</span><span class="nt">&gt;</span>See all 109 sections<span class="nt">&lt;/span&gt;</span>
           <span class="nt">&lt;/div&gt;</span>
 
-          <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow"</span><span class="nt">/&gt;</span>
         <span class="nt">&lt;/div&gt;</span>
       <span class="nt">&lt;/div&gt;</span>
     <span class="nt">&lt;/a&gt;</span>
@@ -5650,7 +5661,7 @@ if (!isset($_SESSION['username'])) {
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover mx-2"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"</span> <span class="na">id=</span><span class="s">"dropdownMenuDocs"</span> <span class="na">data-bs-toggle=</span><span class="s">"dropdown"</span> <span class="na">aria-expanded=</span><span class="s">"false"</span><span class="nt">&gt;</span>
             Docs
-            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;/a&gt;</span>
           <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"dropdown-menu dropdown-menu-animation dropdown-lg mt-0 mt-lg-3 p-3 border-radius-lg"</span> <span class="na">aria-labelledby=</span><span class="s">"dropdownMenuDocs"</span><span class="nt">&gt;</span>
             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-none d-lg-block"</span><span class="nt">&gt;</span>
@@ -5983,8 +5994,8 @@ if (!isset($_SESSION['username'])) {
         <li class="nav-item dropdown dropdown-hover mx-2 ms-lg-6">
           <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" id="dropdownMenuPages2" data-bs-toggle="dropdown" aria-expanded="false">
             Pages
-            <img src="./assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-1 d-lg-block d-none">
-            <img src="./assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1 d-lg-none d-block">
+            <img src="assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-1 d-lg-block d-none">
+            <img src="assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1 d-lg-none d-block">
           </a>
           <div class="dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3" aria-labelledby="dropdownMenuPages2">
             <div class="d-none d-lg-block">
@@ -6023,13 +6034,13 @@ if (!isset($_SESSION['username'])) {
         <li class="nav-item dropdown dropdown-hover mx-2">
           <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" id="dropdownMenuBlocks" data-bs-toggle="dropdown" aria-expanded="false">
             Blocks
-            <img src="./assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-1 d-lg-block d-none">
-            <img src="./assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1 d-lg-none d-block">
+            <img src="assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-1 d-lg-block d-none">
+            <img src="assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1 d-lg-none d-block">
           </a>
           <ul class="dropdown-menu dropdown-menu-animation dropdown-lg dropdown-lg-responsive p-3 border-radius-lg mt-0 mt-lg-3" aria-labelledby="dropdownMenuBlocks">
             <div class="d-none d-lg-block">
   <li class="nav-item dropdown dropdown-hover dropdown-subitem">
-    <a class="dropdown-item py-2 ps-3 border-radius-md" href="./presentation.html">
+    <a class="dropdown-item py-2 ps-3 border-radius-md" href="presentation.html">
       <div class="d-flex">
         <div class="icon h-10 me-3 d-flex mt-1">
           <i class="ni ni-single-copy-04 text-gradient text-primary"></i>
@@ -6040,7 +6051,7 @@ if (!isset($_SESSION['username'])) {
             <span class="text-sm">See all 109 sections</span>
           </div>
 
-          <img src="./assets/img/down-arrow.svg" alt="down-arrow" class="arrow"/>
+          <img src="assets/img/down-arrow.svg" alt="down-arrow" class="arrow"/>
         </div>
       </div>
     </a>
@@ -6130,8 +6141,8 @@ if (!isset($_SESSION['username'])) {
         <li class="nav-item dropdown dropdown-hover mx-2">
           <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" id="dropdownMenuDocs" data-bs-toggle="dropdown" aria-expanded="false">
             Docs
-            <img src="./assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-1 d-lg-block d-none">
-            <img src="./assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1 d-lg-none d-block">
+            <img src="assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-1 d-lg-block d-none">
+            <img src="assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1 d-lg-none d-block">
           </a>
           <ul class="dropdown-menu dropdown-menu-animation dropdown-lg mt-0 mt-lg-3 p-3 border-radius-lg" aria-labelledby="dropdownMenuDocs">
             <div class="d-none d-lg-block">
@@ -6405,7 +6416,7 @@ if (!isset($_SESSION['username'])) {
 <!-- End Navbar -->
 
           </div>
-          <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
           '></iframe>
                   </div>
                   <div class="tab-pane" id="code-nav-transparent">
@@ -6431,8 +6442,8 @@ if (!isset($_SESSION['username'])) {
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover mx-2 ms-lg-6"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"</span> <span class="na">id=</span><span class="s">"dropdownMenuPages2"</span> <span class="na">data-bs-toggle=</span><span class="s">"dropdown"</span> <span class="na">aria-expanded=</span><span class="s">"false"</span><span class="nt">&gt;</span>
             Pages
-            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow-white.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1 d-lg-block d-none"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1 d-lg-none d-block"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow-white.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1 d-lg-block d-none"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1 d-lg-none d-block"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;/a&gt;</span>
           <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"dropdown-menu dropdown-menu-animation dropdown-md p-3 border-radius-lg mt-0 mt-lg-3"</span> <span class="na">aria-labelledby=</span><span class="s">"dropdownMenuPages2"</span><span class="nt">&gt;</span>
             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-none d-lg-block"</span><span class="nt">&gt;</span>
@@ -6471,13 +6482,13 @@ if (!isset($_SESSION['username'])) {
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover mx-2"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"</span> <span class="na">id=</span><span class="s">"dropdownMenuBlocks"</span> <span class="na">data-bs-toggle=</span><span class="s">"dropdown"</span> <span class="na">aria-expanded=</span><span class="s">"false"</span><span class="nt">&gt;</span>
             Blocks
-            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow-white.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1 d-lg-block d-none"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1 d-lg-none d-block"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow-white.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1 d-lg-block d-none"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1 d-lg-none d-block"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;/a&gt;</span>
           <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"dropdown-menu dropdown-menu-animation dropdown-lg dropdown-lg-responsive p-3 border-radius-lg mt-0 mt-lg-3"</span> <span class="na">aria-labelledby=</span><span class="s">"dropdownMenuBlocks"</span><span class="nt">&gt;</span>
             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-none d-lg-block"</span><span class="nt">&gt;</span>
   <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover dropdown-subitem"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"dropdown-item py-2 ps-3 border-radius-md"</span> <span class="na">href=</span><span class="s">"./presentation.html"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"dropdown-item py-2 ps-3 border-radius-md"</span> <span class="na">href=</span><span class="s">"presentation.html"</span><span class="nt">&gt;</span>
       <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-flex"</span><span class="nt">&gt;</span>
         <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"icon h-10 me-3 d-flex mt-1"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;i</span> <span class="na">class=</span><span class="s">"ni ni-single-copy-04 text-gradient text-primary"</span><span class="nt">&gt;&lt;/i&gt;</span>
@@ -6488,7 +6499,7 @@ if (!isset($_SESSION['username'])) {
             <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"text-sm"</span><span class="nt">&gt;</span>See all 109 sections<span class="nt">&lt;/span&gt;</span>
           <span class="nt">&lt;/div&gt;</span>
 
-          <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow"</span><span class="nt">/&gt;</span>
         <span class="nt">&lt;/div&gt;</span>
       <span class="nt">&lt;/div&gt;</span>
     <span class="nt">&lt;/a&gt;</span>
@@ -6578,8 +6589,8 @@ if (!isset($_SESSION['username'])) {
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"nav-item dropdown dropdown-hover mx-2"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"</span> <span class="na">id=</span><span class="s">"dropdownMenuDocs"</span> <span class="na">data-bs-toggle=</span><span class="s">"dropdown"</span> <span class="na">aria-expanded=</span><span class="s">"false"</span><span class="nt">&gt;</span>
             Docs
-            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow-white.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1 d-lg-block d-none"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1 d-lg-none d-block"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow-white.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1 d-lg-block d-none"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"assets/img/down-arrow-dark.svg"</span> <span class="na">alt=</span><span class="s">"down-arrow"</span> <span class="na">class=</span><span class="s">"arrow ms-1 d-lg-none d-block"</span><span class="nt">&gt;</span>
           <span class="nt">&lt;/a&gt;</span>
           <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"dropdown-menu dropdown-menu-animation dropdown-lg mt-0 mt-lg-3 p-3 border-radius-lg"</span> <span class="na">aria-labelledby=</span><span class="s">"dropdownMenuDocs"</span><span class="nt">&gt;</span>
             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"d-none d-lg-block"</span><span class="nt">&gt;</span>
@@ -6910,8 +6921,8 @@ if (!isset($_SESSION['username'])) {
   </div>
 </div>
 
-          <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-          <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
           <script src="https://unpkg.com/soft-ui-design-system@1.0.4/assets/js/soft-design-system.min.js" type="text/javascript"></script>
           '></iframe>
                   </div>
@@ -7010,8 +7021,8 @@ if (!isset($_SESSION['username'])) {
   </div>
 </div>
 
-          <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-          <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>'></iframe>
+          <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>'></iframe>
                   </div>
                   <div class="tab-pane" id="code-pagination-simple">
                     <div class="position-relative p-4 pb-2">
@@ -7156,8 +7167,8 @@ if (!isset($_SESSION['username'])) {
           <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
           <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
           <!-- Nucleo Icons -->
-          <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
-          <link href="./assets/css/nucleo-svg.css" rel="stylesheet" /><link href="https://unpkg.com/soft-ui-design-system@1.0.4/assets/css/soft-design-system.min.css" rel="stylesheet" /><div class="row text-center py-2 mt-3">
+          <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+          <link href="assets/css/nucleo-svg.css" rel="stylesheet" /><link href="https://unpkg.com/soft-ui-design-system@1.0.4/assets/css/soft-design-system.min.css" rel="stylesheet" /><div class="row text-center py-2 mt-3">
   <div class="col-4 mx-auto">
     <div class="input-group mb-4">
       <span class="input-group-text"><i class="fas fa-search" aria-hidden="true"></i></span>
@@ -7335,8 +7346,8 @@ if (!isset($_SESSION['username'])) {
           <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
           <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
           <!-- Nucleo Icons -->
-          <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
-          <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+          <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+          <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
           <link id="pagestyle" href="https://demos.creative-tim.com/soft-ui-design-system/assets/css/soft-design-system.min.css?v=1.0.9" rel="stylesheet" />
           <section>
   <div class="container py-4">
@@ -7387,8 +7398,8 @@ if (!isset($_SESSION['username'])) {
   </div>
 </section>
 
-          <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-          <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+          <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
           <script src="?v=1.0.9" type="text/javascript"></script>
           '></iframe>
                   </div>
@@ -7499,8 +7510,8 @@ if (!isset($_SESSION['username'])) {
           <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
           <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
           <!-- Nucleo Icons -->
-          <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
-          <link href="./assets/css/nucleo-svg.css" rel="stylesheet" /><link href="https://unpkg.com/soft-ui-design-system@1.0.4/assets/css/soft-design-system.min.css" rel="stylesheet" /><!-- -------- START HEADER 1 w/ text and image on right ------- -->
+          <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+          <link href="assets/css/nucleo-svg.css" rel="stylesheet" /><link href="https://unpkg.com/soft-ui-design-system@1.0.4/assets/css/soft-design-system.min.css" rel="stylesheet" /><!-- -------- START HEADER 1 w/ text and image on right ------- -->
 <header>
   <div class="page-header min-vh-100">
     <div class="oblique position-absolute top-0 h-100 d-md-block d-none">
@@ -7594,8 +7605,8 @@ if (!isset($_SESSION['username'])) {
           <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
           <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
           <!-- Nucleo Icons -->
-          <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
-          <link href="./assets/css/nucleo-svg.css" rel="stylesheet" /><link href="https://unpkg.com/soft-ui-design-system@1.0.4/assets/css/soft-design-system.min.css" rel="stylesheet" /><!-- -------- START Features w/ icons and text on left & gradient title and text on right -------- -->
+          <link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+          <link href="assets/css/nucleo-svg.css" rel="stylesheet" /><link href="https://unpkg.com/soft-ui-design-system@1.0.4/assets/css/soft-design-system.min.css" rel="stylesheet" /><!-- -------- START Features w/ icons and text on left & gradient title and text on right -------- -->
 <div class="container">
   <div class="row py-4">
     <div class="col-lg-6">
@@ -7719,7 +7730,7 @@ if (!isset($_SESSION['username'])) {
         <div class="col-md-8">
           <div class="row mt-4">
             <div class="col-md-6">
-              <a href="./pages/about-us.html">
+              <a href="pages/about-us.html">
                 <div class="card move-on-hover">
                   <img class="w-100" src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/presentation/section-pages/about-us.jpg" alt="">
                 </div>
@@ -7729,7 +7740,7 @@ if (!isset($_SESSION['username'])) {
               </a>
             </div>
             <div class="col-md-6 mt-md-0 mt-5">
-              <a href="./pages/contact-us.html">
+              <a href="pages/contact-us.html">
                 <div class="card move-on-hover">
                   <img class="w-100" src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/presentation/section-pages/contact-us.jpg" alt="">
                 </div>
@@ -7739,7 +7750,7 @@ if (!isset($_SESSION['username'])) {
               </a>
             </div>
             <div class="col-md-6 mt-md-0 mt-6">
-              <a href="./pages/sign-in.html">
+              <a href="pages/sign-in.html">
                 <div class="card move-on-hover">
                   <img class="w-100" src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/presentation/section-account/sign-in.jpg" alt="">
                 </div>
@@ -7749,7 +7760,7 @@ if (!isset($_SESSION['username'])) {
               </a>
             </div>
             <div class="col-md-6 mt-md-0 mt-6">
-              <a href="./pages/author.html">
+              <a href="pages/author.html">
                 <div class="card move-on-hover">
                   <img class="w-100" src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/presentation/section-pages/author.jpg" alt="">
                 </div>
@@ -7984,19 +7995,19 @@ if (!isset($_SESSION['username'])) {
       <hr class="horizontal dark my-5">
       <div class="row">
         <div class="col-lg-2 col-md-4 col-6 ms-auto">
-          <img class="w-100 opacity-6" src="./assets/img/logos/gray-logos/logo-apple.svg" alt="Logo">
+          <img class="w-100 opacity-6" src="assets/img/logos/gray-logos/logo-apple.svg" alt="Logo">
         </div>
         <div class="col-lg-2 col-md-4 col-6">
-          <img class="w-100 opacity-6" src="./assets/img/logos/gray-logos/logo-facebook.svg" alt="Logo">
+          <img class="w-100 opacity-6" src="assets/img/logos/gray-logos/logo-facebook.svg" alt="Logo">
         </div>
         <div class="col-lg-2 col-md-4 col-6">
-          <img class="w-100 opacity-6" src="./assets/img/logos/gray-logos/logo-nasa.svg" alt="Logo">
+          <img class="w-100 opacity-6" src="assets/img/logos/gray-logos/logo-nasa.svg" alt="Logo">
         </div>
         <div class="col-lg-2 col-md-4 col-6 ms-lg-0 ms-md-auto">
-          <img class="w-100 opacity-6" src="./assets/img/logos/gray-logos/logo-vodafone.svg" alt="Logo">
+          <img class="w-100 opacity-6" src="assets/img/logos/gray-logos/logo-vodafone.svg" alt="Logo">
         </div>
         <div class="col-lg-2 col-md-4 col-6 me-md-auto mx-md-0 mx-auto">
-          <img class="w-100 opacity-6" src="./assets/img/logos/gray-logos/logo-digitalocean.svg" alt="Logo">
+          <img class="w-100 opacity-6" src="assets/img/logos/gray-logos/logo-digitalocean.svg" alt="Logo">
         </div>
       </div>
     </div>
@@ -8005,7 +8016,7 @@ if (!isset($_SESSION['username'])) {
 
   <section class="py-sm-7" id="download-soft-ui">
     <div class="bg-gradient-dark position-relative m-3 border-radius-xl overflow-hidden">
-      <img src="./assets/img/shapes/waves-white.svg" alt="pattern-lines" class="position-absolute start-0 top-md-0 w-100 opacity-6">
+      <img src="assets/img/shapes/waves-white.svg" alt="pattern-lines" class="position-absolute start-0 top-md-0 w-100 opacity-6">
       <div class="container py-7 postion-relative z-index-2 position-relative">
         <div class="row">
           <div class="col-md-7 mx-auto text-center">
@@ -8100,7 +8111,7 @@ if (!isset($_SESSION['username'])) {
         <div class="col-lg-5 col-md-8 order-2 order-md-2 order-lg-1">
           <div class="position-relative ms-lg-5 mb-0 mb-md-7 mb-lg-0 d-none d-md-block d-lg-block d-xl-block h-75">
             <div class="bg-gradient-primary w-100 h-100 border-radius-xl position-absolute d-lg-block d-none"></div>
-            <img src="./assets/img/curved-images/curved11.jpg" class="w-100 border-radius-xl mt-6 ms-lg-5 position-relative z-index-5" alt="">
+            <img src="assets/img/curved-images/curved11.jpg" class="w-100 border-radius-xl mt-6 ms-lg-5 position-relative z-index-5" alt="">
           </div>
         </div>
         <div class="col-lg-5 col-md-12 ms-auto order-1 order-md-1 order-lg-1">
@@ -8329,63 +8340,44 @@ if (!isset($_SESSION['username'])) {
   </footer>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <!--   Core JS Files   -->
-  <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-  <script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
-  <script src="./assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+  <script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+  <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
 
 
 
 
   <!--  Plugin for TypedJS, full documentation here: https://github.com/inorganik/CountUp.js -->
-  <script src="./assets/js/plugins/countup.min.js"></script>
+  <script src="assets/js/plugins/countup.min.js"></script>
 
 
 
 
 
-  <script src="./assets/js/plugins/choices.min.js"></script>
+  <script src="assets/js/plugins/choices.min.js"></script>
 
 
 
 
 
-  <script src="./assets/js/plugins/prism.min.js"></script>
-  <script src="./assets/js/plugins/highlight.min.js"></script>
+  <script src="assets/js/plugins/prism.min.js"></script>
+  <script src="assets/js/plugins/highlight.min.js"></script>
 
 
 
 
 
   <!--  Plugin for Parallax, full documentation here: https://github.com/dixonandmoe/rellax -->
-  <script src="./assets/js/plugins/rellax.min.js"></script>
+  <script src="assets/js/plugins/rellax.min.js"></script>
   <!--  Plugin for TiltJS, full documentation here: https://gijsroge.github.io/tilt.js/ -->
-  <script src="./assets/js/plugins/tilt.min.js"></script>
+  <script src="assets/js/plugins/tilt.min.js"></script>
   <!--  Plugin for Selectpicker - ChoicesJS, full documentation here: https://github.com/jshjohnson/Choices -->
-  <script src="./assets/js/plugins/choices.min.js"></script>
+  <script src="assets/js/plugins/choices.min.js"></script>
 
 
   <!--  Plugin for Parallax, full documentation here: https://github.com/wagerfield/parallax  -->
-  <script src="./assets/js/plugins/parallax.min.js"></script>
+  <script src="assets/js/plugins/parallax.min.js"></script>
 
 
 
@@ -8398,7 +8390,7 @@ if (!isset($_SESSION['username'])) {
   <!--  Google Maps Plugin    -->
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
-  <script src="./assets/js/soft-design-system.min.js?v=1.0.9" type="text/javascript"></script>
+  <script src="assets/js/soft-design-system.min.js?v=1.0.9" type="text/javascript"></script>
 
 
   <script type="text/javascript">
@@ -8427,36 +8419,18 @@ if (!isset($_SESSION['username'])) {
       };
     }
   </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 
 </html>
+
+<?php
+
+if (isset($_POST['edit'])) {
+  $setInfo = new Set('');
+  $setInfo->setConnection($connection);
+  $setInfo->update($id, $_POST['set_name']);
+  echo "<script type='text/javascript'> document.location = 'dashboard.php?" . "user_id=" . $user_id . "'; </script>";
+  exit();
+}
+
+?>
