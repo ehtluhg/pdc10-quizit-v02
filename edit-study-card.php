@@ -870,10 +870,10 @@ $card = $editCard->edit($id);
     <!-- main panel -->
     <div class="container">
       <div class="row">
-        <h1 class="d-flex justify-content-center mt-6"> Edit Flashcard </h1>
+        <h1 class="d-flex justify-content-center mt-7"> Edit Flashcard </h1>
         <hr>
       </div>
-      <div class="row">
+      <div class="row mt-5">
         
         <div class="col-8">
 
@@ -899,7 +899,7 @@ $card = $editCard->edit($id);
                                   
                                 </div>
                               </div>
-                              <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
+                              <h3 class="card-title text-center mt-9"><?php echo $card['title'] ?></h3>
                             </div>
                           </div>
                           <!-- End Card 3 Front -->
@@ -915,7 +915,7 @@ $card = $editCard->edit($id);
                                   
                                 </div>
                               </div>
-                              <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
+                              <h6 class="card-title text-center mt-9 px-8"><?php echo $card['description'] ?></h6>
                             </div>
                           </div>
 
