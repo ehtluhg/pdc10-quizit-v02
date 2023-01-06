@@ -906,7 +906,9 @@ $cards = $addCards->getAll();
             <div class="carousel-inner">
 
               <?php foreach ($cards as $card) {
-                if ($card['id'] === 1) { ?>
+                $i++;
+                if ($card['id'] === 1) {
+                  $i = 1; ?>
                   <div class="carousel-item <?php if ($card['id'] === 1) {
                                               echo "active";
                                             } else {
@@ -918,38 +920,49 @@ $cards = $addCards->getAll();
                         <div class="card-flip mb-4">
 
 
-                          <!-- Card 3 Front -->
+                          <!-- First Card (Front) -->
                           <div id="card" class="card front">
                             <div class="card-block">
                               <div class="row">
                                 <div class="col">
-                                  <h6 class="card-title text-start mx-4 my-3">1 / 9</h6>
+                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $i ?> / n</h6>
                                 </div>
+<<<<<<< HEAD
                                 <div class="col">
                                   <a href="edit-study-card.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></a>
                                   <a href="delete-study-card.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-trash mx-4 my-3"></i></p></a></div>
                                 </div>
+=======
+                              </div>
+>>>>>>> e9405693d46f1972693396da8326123b027ac9da
                               <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
+                              <div class="col">
+                                <a href="edit-study-set.php?id=<?php echo $card['id'] ?>">
+                                  <p class="text-center"><i class="fa fa-pencil-square-o mx-4 my-7"></i></p>
+                                </a>
+                              </div>
                             </div>
                           </div>
-                          <!-- End Card 3 Front -->
+                          <!-- End First Card (Front) -->
 
-                          <!-- Card 3 Back -->
+                          <!-- First Card (Back) -->
                           <div class="card back text-center">
                             <div class="card-block">
                               <div class="row">
                                 <div class="col">
-                                  <h6 class="card-title text-start mx-4 my-3">1 / 9</h6>
+                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $card['id'] ?> / n</h6>
                                 </div>
-                                <div class="col">
-                                  <a href="edit-study-set.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></a>
-                                </div>                                
                               </div>
                               <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
+                              <div class="col">
+                                <a href="edit-study-set.php?id=<?php echo $card['id'] ?>">
+                                  <p class="text-center"><i class="fa fa-pencil-square-o mx-4 pt-8"></i></p>
+                                </a>
+                              </div>
                             </div>
                           </div>
 
-                          <!-- End Card 3 Back -->
+                          <!-- End First Card (Back) -->
 
 
                         </div>
@@ -957,7 +970,8 @@ $cards = $addCards->getAll();
                     </div>
                   </div>
 
-                <?php } else {  ?>
+                <?php } else {
+                  $i == 2 ?>
                   <div class="carousel-item">
                     <div class="card-wrapper">
                       <input type="checkbox" id="card-<?php echo $card['id'] ?>" />
@@ -965,30 +979,48 @@ $cards = $addCards->getAll();
                         <div class="card-flip mb-4">
 
 
-                          <!-- Card 3 Front -->
+                          <!-- Next Cards (Front) -->
                           <div id="card" class="card front">
                             <div class="card-block">
                               <div class="row">
+<<<<<<< HEAD
                                 <div class="col"><h6 class="card-title text-start mx-4 my-3">1 / 9</h6></div>
                                 <div class="col"><a href="edit-study-card.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></a>
                                 <a href="delete-study-card.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-trash mx-4 my-3"></i></p></a></div>
+=======
+                                <div class="col">
+                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $i ?> / n</h6>
+                                </div>
+>>>>>>> e9405693d46f1972693396da8326123b027ac9da
                               </div>
                               <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
+                              <div class="col">
+                                <a href="edit-study-set.php?id=<?php echo $card['id'] ?>">
+                                  <p class="text-center"><i class="fa fa-pencil-square-o mx-4 my-7"></i></p>
+                                </a>
+                              </div>
                             </div>
                           </div>
-                          <!-- End Card 3 Front -->
+                          <!-- End Next Cards (Front) -->
 
-                          <!-- Card 3 Back -->
+                          <!-- Next Cards (Back) -->
                           <div class="card back text-center">
                             <div class="card-block">
                               <div class="row">
-                                <div class="col"><h6 class="card-title text-start mx-4 my-3">1 / 9</h6></div>
-                                <div class="col"><a href="edit-study-set.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></a></div>                              </div>
+                                <div class="col">
+                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $card['id'] ?> / n</h6>
+                                </div>
+                              </div>
                               <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
+                              <div class="col">
+                                <a href="edit-study-set.php?id=<?php echo $card['id'] ?>">
+                                  <p class="text-center"><i class="fa fa-pencil-square-o mx-4 pt-8"></i></p>
+                                </a>
+                              </div>
                             </div>
                           </div>
 
-                          <!-- End Card 3 Back -->
+                          <!-- End Next Cards (Back) -->
 
 
                         </div>
