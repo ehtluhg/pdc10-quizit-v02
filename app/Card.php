@@ -121,7 +121,7 @@ class Card
 
 		} catch (Exception $e) {
 			error_log($e->getMessage());
-		}
+		}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 	}
 
 	public function delete($id)
