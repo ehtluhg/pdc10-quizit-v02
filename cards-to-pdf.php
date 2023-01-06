@@ -25,10 +25,13 @@ function Header()
     $this->Ln(20);
 }
 }
+// QuizIt Logo
+$logo = 'QuizIt.png';
+
 $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial','B',16);
-$pdf->Cell(40,10,'QuizIt!',1);
+$pdf->Cell(40, 10, $pdf->Image($logo, $pdf->GetX(), $pdf->GetY(), 33.78), 0);
 $pdf->Ln(20);
 $pdf->Cell(50,10,'Set Name: ' . $cards[0]['name'],0,1);
 $pdf->Ln(20);

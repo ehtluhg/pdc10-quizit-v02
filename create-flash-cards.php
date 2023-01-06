@@ -897,13 +897,13 @@ $cardsBySet = $cards->getBySet($set_id);
         <div class="col-8">
 
           <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="true">
-            <div class="carousel-indicators mb-2">
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="active" aria-current="true" aria-label="1"></button>
+            <!-- <div class="carousel-indicators mb-2">
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="1"></button>
 
-              <?php foreach ($cardsBySet as $card) {  ?>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $card['id'] ?>" aria-current="true" aria-label="Slide <?php echo $card['id'] ?>"></button>
-              <?php } ?>
-            </div>
+              <php $i = 1; foreach ($cardsBySet as $card) {  ?>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<php echo $i ?>" aria-current="true" aria-label="Slide <php echo $i ?>"></button>
+              <php $i++; } ?>
+            </div> -->
             <!-- First Card -->
             <div class="carousel-inner">
 
@@ -946,7 +946,7 @@ $cardsBySet = $cards->getBySet($set_id);
                             <div class="card-block">
                               <div class="row">
                                 <div class="col">
-                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $card['id'] ?> / n</h6>
+                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $i ?> / <?php echo sizeof($cardsBySet)?></h6>
                                 </div>
                                 <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
                                 <div class="col">
@@ -1000,7 +1000,7 @@ $cardsBySet = $cards->getBySet($set_id);
                             <div class="card-block">
                               <div class="row">
                                 <div class="col">
-                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $card['id'] ?> / n</h6>
+                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $i ?> / <?php echo sizeof($cardsBySet)?></h6>
                                 </div>
                                 <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
                                 <div class="col">
