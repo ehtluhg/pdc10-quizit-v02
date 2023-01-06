@@ -124,6 +124,16 @@ class Card
 		}
 	}
 
+	public function delete($id)
+	{
+		try {
+			$sql = 'DELETE FROM tb_cards WHERE id=' . $id;
+			$statement = $this->connection->query($sql);
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
+
 	public function checkAnswers($card_set, $id, $answer)
 	{
 		try {
@@ -133,22 +143,5 @@ class Card
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
-	}
-
-	public function exportSet($card_set)
-	{
-		$sql = 'SELECT tb_cards.title as title, tb_cards.description as description, tb_sets.set_name as name
-			FROM tb_cards
-			INNER JOIN tb_sets
-			ON tb_cards.set_id = tb_sets.id
-			WHERE tb_cards.set_id=:set_id';
-
-            $statement = $this->connection->prepare($sql);
-            $statement->execute([
-                ':set_id' => $card_set,
-            ]);
-
-            $cards = $statement->fetchAll();
-			return $cards;
 	}
 }

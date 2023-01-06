@@ -7,7 +7,6 @@ use App\Card;
 $addCards = new Card('');
 $addCards->setConnection($connection);
 $cards = $addCards->getAll();
-
 ?>
 
 <html lang="en" itemscope itemtype="http://schema.org/WebPage">
@@ -927,8 +926,9 @@ $cards = $addCards->getAll();
                                   <h6 class="card-title text-start mx-4 my-3">1 / 9</h6>
                                 </div>
                                 <div class="col">
-                                  <a href="edit-study-set.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></a>
-                              </div>
+                                  <a href="edit-study-card.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></a>
+                                  <a href="delete-study-card.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-trash mx-4 my-3"></i></p></a></div>
+                                </div>
                               <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
                             </div>
                           </div>
@@ -970,7 +970,8 @@ $cards = $addCards->getAll();
                             <div class="card-block">
                               <div class="row">
                                 <div class="col"><h6 class="card-title text-start mx-4 my-3">1 / 9</h6></div>
-                                <div class="col"><a href="edit-study-set.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></a></div>
+                                <div class="col"><a href="edit-study-card.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></a>
+                                <a href="delete-study-card.php?id=<?php echo $card['id'] ?>"><p class="text-end"><i class="fa fa-trash mx-4 my-3"></i></p></a></div>
                               </div>
                               <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
                             </div>

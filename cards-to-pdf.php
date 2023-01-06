@@ -1,12 +1,12 @@
 <?php
 include('vendor/autoload.php');
 require('init.php');
-use App\Card;
+use App\Set;
 use App\FPDF;
-$card = new Card('');
-$card->setConnection($connection);
+$cardset = new Set('');
+$cardset->setConnection($connection);
 if(isset($_GET['card_set'])){ 
-$cards = $card->exportSet($_GET['card_set']);
+$cardset = $cardset->exportSet($_GET['card_set']);
 }
 class PDF extends FPDF
 {
