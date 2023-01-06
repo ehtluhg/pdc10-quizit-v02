@@ -4,9 +4,11 @@ require('init.php');
 
 use App\Card;
 
+$set_id = $_GET['set_id'];
 $addCards = new Card('');
 $addCards->setConnection($connection);
-$cards = $addCards->getAll();
+$cards = $addCards->checkAnswers($set_id);
+$setName = $addCards->getSetName($set_id);
 
 ?>
 
@@ -856,7 +858,7 @@ $cards = $addCards->getAll();
     <!-- main panel -->
     <div class="container">
       <div class="row">
-        <h1 class="d-flex justify-content-center mt-6"> [NAME OF SET] </h1>
+        <h1 class="d-flex justify-content-center mt-6"> <?php echo $setName['set_name']; ?> </h1>
         <hr>
       </div>
       <div class="row justify-content-center">

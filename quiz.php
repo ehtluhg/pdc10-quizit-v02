@@ -4,15 +4,18 @@ require('init.php');
 
 use App\Card;
 
-$addCards = new Card('');
-$addCards->setConnection($connection);
-$cards = $addCards->getAll();
+$set_id = $_GET['set_id'];
+
+$cards = new Card('');
+$cards->setConnection($connection);
+$cardsBySet = $cards->getBySet($set_id);
+$setName = $cards->getSetName($set_id);
 
  if(isset($_POST['submit'])){ 
   //check if form was submitted
   try {
     $score = 0;
-    foreach ($cards as $card){
+    foreach ($cardsBySet as $card){
       $i = $card['id'];
       $answer = $card['title'];
       if ($answer == $_POST[$i]){
@@ -21,7 +24,7 @@ $cards = $addCards->getAll();
     }
     $total = $_POST['questions'];
     echo $score;
-    header("Location: quiz-results.php" . "?score=" . $score . "&total=" . $total); 
+    header("Location: quiz-results.php" . "?set_id=" . $set_id ."&score=" . $score . "&total=" . $total); 
   } catch (Exception $e) {
       error_log($e->getMessage());
   }
@@ -874,7 +877,7 @@ $cards = $addCards->getAll();
     <!-- main panel -->
     <div class="container">
       <div class="row">
-        <h1 class="d-flex justify-content-center mt-6"> [NAME OF SET] </h1>
+        <h1 class="d-flex justify-content-center mt-6"><?php echo $setName['set_name']?></h1>
         <hr>
       </div>
       <div class="row justify-content-center">
@@ -896,16 +899,14 @@ $cards = $addCards->getAll();
         <div class="col-8">
         <form method="POST">
           <?php 
-          foreach ($cards as $card){ 
+          foreach ($cardsBySet as $card){ 
           ?>
                           <div id="card" class="card front">
                             <div class="card-block">
                               <div class="row">
                                 <div class="col">
-                                  <h6 class="card-title text-start mx-4 my-3">1 / 9</h6>
                                 </div>
                                 <div class="col">
-                                  <p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i>
                                 </div>
                               </div>
                               <div class="container card-title text-center" style="position: absolute">
@@ -919,7 +920,7 @@ $cards = $addCards->getAll();
                             </div>
                           </div>
             <?php } ?>
-            <input type="hidden" name="questions" value="<?php echo count($cards)?>">
+            <input type="hidden" name="questions" value="<?php echo count($cardsBySet)?>">
             <button type="submit" name="submit" class="btn btn-primary"> Submit </button> 
           </form>
                         </div>
@@ -8565,13 +8566,3 @@ $cards = $addCards->getAll();
 </body>
 
 </html>
-
-<?php
-if (isset($_POST['card'])) {
-  $cardInfo = new Card($_POST['set_id'], $_POST['title'], $_POST['description']);
-  $cardInfo->setConnection($connection);
-  $cardInfo->save();
-  header("Location: card.php");
-  exit();
-}
-?>

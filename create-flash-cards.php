@@ -877,6 +877,7 @@ $cardsBySet = $cards->getBySet($set_id);
         <div class="container-fluid px-0 overflow-hidden">
           <div class="row py-4 px-4 mt-3">
             <div class="col-12 mx-auto">
+              <a href="quiz.php?set_id=<?php echo $set_id?>">
               <button class="btn bg-gradient-primary btn-icon" type="button">
                 <div class="d-flex align-items-center">
                   <i class="fa fa-graduation-cap me-2" aria-hidden="true"></i>

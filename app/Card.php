@@ -134,12 +134,16 @@ class Card
 		}
 	}
 
-	public function checkAnswers($card_set, $id, $answer)
+	public function checkAnswers($id)
 	{
 		try {
-			$sql = 'SELECT * FROM tb_cards';
-			$data = $this->connection->query($sql)->fetchAll();
-			return $data;
+			$sql = 'SELECT * FROM tb_cards WHERE set_id=:set_id';
+			$data = $this->connection->prepare($sql);
+			$data->execute([
+				':set_id' => $id,
+			]);
+			$cards = $data->fetchAll();
+			return $cards;
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}
@@ -171,6 +175,21 @@ class Card
                 ':set_id' => $set_id,
             ]);
 			$cards = $statement->fetchAll();
+			return $cards;
+		} catch (Exception $e) {
+			error_log($e->getMessage());
+		}
+	}
+
+	public function getSetName($set_id)
+	{
+		try {
+			$sql = 'SELECT set_name FROM tb_sets WHERE id=:id';
+			$statement = $this->connection->prepare($sql);
+			$statement->execute([
+                ':id' => $set_id,
+            ]);
+			$cards = $statement->fetch();
 			return $cards;
 		} catch (Exception $e) {
 			error_log($e->getMessage());

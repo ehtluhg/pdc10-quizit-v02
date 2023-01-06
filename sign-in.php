@@ -20,7 +20,7 @@ if(isset($_POST['login'])){
         $control2 = $query2->fetch();
         if ($control > 0){
             $_SESSION['username'] = $username;
-            header("Location: index.php?user_id=" . $control2['id']);
+            header("Location: dashboard.php?user_id=" . $control2['id']);
         }
     }
 }
@@ -802,18 +802,5 @@ if(isset($_POST['login'])){
 </body>
 
 </html>
-
-<?php
-
-if(isset($_POST['login'])) {
-    $getLoginInfo = new User('');
-    $getLoginInfo->setConnection($connection);
-    $loginInfo = $getLoginInfo->login($_POST['email_address'], $_POST['password']);
-
-    // Si Audrey po gumawa ng pag-redirect ng page to index.php
-    echo "<script type='text/javascript'> document.location = 'home.php'; </script>";
-    exit();
-
-}
 
 ?>
