@@ -870,29 +870,11 @@ $card = $editCard->edit($id);
     <!-- main panel -->
     <div class="container">
       <div class="row">
-        <h1 class="d-flex justify-content-center mt-6"> Add Flashcards </h1>
+        <h1 class="d-flex justify-content-center mt-6"> Edit Flashcard </h1>
         <hr>
       </div>
       <div class="row">
-        <div class="container-fluid px-0 overflow-hidden">
-          <div class="row py-4 px-4 mt-3">
-            <div class="col-12 mx-auto">
-              <button class="btn bg-gradient-primary btn-icon" type="button">
-                <div class="d-flex align-items-center">
-                  <i class="fa fa-graduation-cap me-2" aria-hidden="true"></i>
-                  Quiz
-                </div>
-              </button>
-              <button class="btn bg-gradient-primary btn-icon" type="button">
-                <div class="d-flex align-items-center">
-                  <i class="fa fa-book me-2" aria-hidden="true"></i>
-                  Practice
-                </div>
-              </button>
-              <button type="button" class="btn btn-outline-primary">Export</button>
-            </div>
-          </div>
-        </div>
+        
         <div class="col-8">
 
           <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="true">
@@ -911,10 +893,10 @@ $card = $editCard->edit($id);
                             <div class="card-block">
                               <div class="row">
                                 <div class="col">
-                                  <h6 class="card-title text-start mx-4 my-3">1 / 9</h6>
+                                  
                                 </div>
                                 <div class="col">
-                                  <a href="edit-study-set.php"><p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i></a> 
+                                  
                                 </div>
                               </div>
                               <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
@@ -927,10 +909,10 @@ $card = $editCard->edit($id);
                             <div class="card-block">
                               <div class="row">
                                 <div class="col">
-                                  <h6 class="card-title text-start mx-4 my-3">1 / 9</h6>
+                      
                                 </div>
                                 <div class="col">
-                                  <p class="text-end"><i class="fa fa-pencil-square-o mx-4 my-3"></i></p></i>
+                                  
                                 </div>
                               </div>
                               <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
@@ -8610,7 +8592,7 @@ if (isset($_POST['card'])) {
   $cardInfo = new Card('');
   $cardInfo->setConnection($connection);
   $cardInfo->update($id, $_POST['set_id'], $_POST['title'], $_POST['description']);
-  echo "<script type='text/javascript'> document.location = 'create-study-set.php'; </script>";
+  echo "<script type='text/javascript'> document.location = 'create-flash-cards.php?" . "set_id=" . $_POST['set_id'] . "'; </script>";
   exit();
 }
 ?>

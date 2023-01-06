@@ -1,11 +1,13 @@
 <?php
 include('vendor/autoload.php');
 require('init.php');
-use App\Card;
-
-$cards = new Card('');
-$cards->setConnection($connection);
-$cards = $cards->getAll();
+use App\User;
+$userId = $_GET['user_id'];
+$studentCards = new User('');
+$studentCards->setConnection($connection);
+$totalCards = new User('');
+$totalCards->setConnection($connection);
+$studentCards = $studentCards->getUserCardSet($userId);
 session_start();
 if (!isset($_SESSION['username'])){
   header('location: sign-in.php');
@@ -970,12 +972,12 @@ if (!isset($_SESSION['username'])){
                   </a>
                 </li>
                 <li class="nav-item my-auto ms-3 ms-lg-0">
-                  <a href="login.php"
-                    class="btn btn-sm btn-outline-primary btn-round mb-0 me-1 mt-2 mt-md-0">Login/Register</a>
+                  <a href="logout.php"
+                    class="btn btn-sm btn-outline-primary btn-round mb-0 me-1 mt-2 mt-md-0">Logout</a>
                 </li>
                 <li class="nav-item my-auto ms-3 ms-lg-0">
 
-                  <a href="create-study-set.php?user_id=<?php echo $_GET['user_id'];?>"
+                  <a href="create-study-set.php"
                     class="btn btn-sm  bg-gradient-primary  btn-round mb-0 me-1 mt-2 mt-md-0">Create Study Set</a>
 
                 </li>
@@ -1113,6 +1115,7 @@ if (!isset($_SESSION['username'])){
       </svg>
     </div>
     <div class="container" style="margin-bottom: 150px;">
+
       <div class="row">
         <div class="col-md-8 text-start mb-5 mt-5">
           <h3 class="text-white z-index-1 position-relative">Your Study Sets</h3>
@@ -1120,41 +1123,19 @@ if (!isset($_SESSION['username'])){
         </div>
       </div>
 
+      <?php foreach ($studentCards as $studentCard){
+        $set_id = $studentCard['id']; ?>
       <div class="row">
         <div class="card text-bg-light mb-3" style="max-width: 39rem; margin-right: 20px;">
           <div class="card-body">
-            <h5 class="card-title">Professional Domain Course 1</h5>
-            <p class="card-text mb-5">5 terms</p>
-            <h6 class="card-title mt-5">Gabriel Dy</h6>
+            <h5 class="card-title"><?php echo $studentCard['set_name']?></h5>
+            <p class="card-text mb-5"><?php $total = $totalCards->getTotalCards($set_id); echo $total['total_cards'];?> terms</p>
+            <h6 class="card-title mt-5"><?php echo $studentCard['first_name'] . ' ' . $studentCard['last_name']?></h6>
           </div>
         </div>
+      <?php } ?>
 
-        <div class="card text-bg-light mb-3" style="max-width: 39rem;">
-          <div class="card-body">
-            <h5 class="card-title">Professional Domain Course 1</h5>
-            <p class="card-text mb-5">5 terms</p>
-            <h6 class="card-title mt-5">Gabriel Dy</h6>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="card text-bg-light mb-3" style="max-width: 39rem; margin-right: 20px;">
-          <div class="card-body">
-            <h5 class="card-title">Professional Domain Course 1</h5>
-            <p class="card-text mb-5">5 terms</p>
-            <h6 class="card-title mt-5">Gabriel Dy</h6>
-          </div>
-        </div>
-
-        <div class="card text-bg-light mb-3" style="max-width: 39rem;">
-          <div class="card-body">
-            <h5 class="card-title">Professional Domain Course 1</h5>
-            <p class="card-text mb-5">5 terms</p>
-            <h6 class="card-title mt-5">Gabriel Dy</h6>
-          </div>
-        </div>
-      </div>
+        
 
 
       <!-- <div class="row">

@@ -932,8 +932,8 @@ $cardsBySet = $cards->getBySet($set_id);
                                 <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
                                 <div class="col">
                                   <p class="text-center">
-                                    <a href="edit-study-set.php?id=<?php echo $card['id'] ?>"><i class="fa fa-pencil-square-o mx-2 my-7"></i></a>
-                                    <a href="delete-study-set.php?id=<?php echo $card['id'] ?>"><i class="danger fa fa-trash mx-2 my-7"></i></a>
+                                    <a href="edit-study-card.php?id=<?php echo $card['id'] ?>"><i class="fa fa-pencil-square-o mx-2 my-7"></i></a>
+                                    <a href="delete-study-card.php?id=<?php echo $card['id'] ?>&set_id=<?php echo $set_id ?>"><i class="danger fa fa-trash mx-2 my-7"></i></a>
                                   </p>
                                 </div>
                               </div>
@@ -951,8 +951,8 @@ $cardsBySet = $cards->getBySet($set_id);
                                 <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
                                 <div class="col">
                                   <p class="text-center">
-                                    <a href="edit-study-set.php?id=<?php echo $card['id'] ?>"><i class="fa fa-pencil-square-o mx-2 pt-8"></i></a>
-                                    <a href="delete-study-set.php?id=<?php echo $card['id'] ?>"><i class="danger fa fa-trash mx-2 pt-8"></i></a>
+                                    <a href="edit-study-card.php?id=<?php echo $card['id'] ?>"><i class="fa fa-pencil-square-o mx-2 pt-8"></i></a>
+                                    <a href="delete-study-card.php?id=<?php echo $card['id'] ?>&set_id=<?php echo $set_id ?>"><i class="danger fa fa-trash mx-2 pt-8"></i></a>
                                   </p>
                                 </div>
                               </div>
@@ -986,8 +986,8 @@ $cardsBySet = $cards->getBySet($set_id);
                                 <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
                                 <div class="col">
                                   <p class="text-center">
-                                    <a href="edit-study-set.php?id=<?php echo $card['id'] ?>"><i class="fa fa-pencil-square-o mx-2 my-7"></i></a>
-                                    <a href="delete-study-set.php?id=<?php echo $card['id'] ?>"><i class="danger fa fa-trash mx-2 my-7"></i></a>
+                                    <a href="edit-study-card.php?id=<?php echo $card['id'] ?>"><i class="fa fa-pencil-square-o mx-2 my-7"></i></a>
+                                    <a href="delete-study-card.php?id=<?php echo $card['id'] ?>&set_id=<?php echo $set_id ?>"><i class="danger fa fa-trash mx-2 my-7"></i></a>
                                   </p>
                                 </div>
                               </div>
@@ -1005,8 +1005,8 @@ $cardsBySet = $cards->getBySet($set_id);
                                 <h6 class="card-title text-center mt-8 px-8"><?php echo $card['description'] ?></h6>
                                 <div class="col">
                                   <p class="text-center">
-                                    <a href="edit-study-set.php?id=<?php echo $card['id'] ?>"><i class="fa fa-pencil-square-o mx-2 pt-8"></i></a>
-                                    <a href="delete-study-set.php?id=<?php echo $card['id'] ?>"><i class="danger fa fa-trash mx-2 pt-8"></i></a>
+                                    <a href="edit-study-card.php?id=<?php echo $card['id'] ?>"><i class="fa fa-pencil-square-o mx-2 pt-8"></i></a>
+                                    <a href="delete-study-card.php?id=<?php echo $card['id'] ?>&set_id=<?php echo $set_id ?>"><i class="danger fa fa-trash mx-2 pt-8"></i></a>
                                   </p>
                                 </div>
                               </div>
