@@ -103,4 +103,37 @@ class User
         }
     }
 
+    public function getUserCardSet($user_id){
+		$sql = 'SELECT tb_users.first_name , tb_users.last_name, tb_sets.set_name, tb_sets.id
+			FROM tb_users
+			JOIN tb_sets
+			ON tb_sets.user_id = tb_users.id
+			WHERE tb_users.id=:user_id';
+
+            $statement = $this->connection->prepare($sql);
+            $statement->execute([
+                ':user_id' => $user_id,
+            ]);
+
+            $data = $statement->fetchAll();
+			return $data;
+	}
+
+    public function getTotalCards($set_id){
+		$sql = 'SELECT COUNT(title) as total_cards
+			FROM tb_cards
+			WHERE set_id=:set_id';
+
+            $statement = $this->connection->prepare($sql);
+            $statement->execute([
+                ':set_id' => $set_id,
+            ]);
+
+            $data = $statement->fetch();
+			return $data;
+	}
+
+
+
+
 }

@@ -1,12 +1,14 @@
 <?php
 include('vendor/autoload.php');
 require('init.php');
-use App\Set;
+use App\User;
 $userId = $_GET['user_id'];
-$studentCards = new Set('');
+$studentCards = new User('');
 $studentCards->setConnection($connection);
+$totalCards = new User('');
+$totalCards->setConnection($connection);
 $studentCards = $studentCards->getUserCardSet($userId);
-
+var_dump($studentCards);
 ?>
 
 
@@ -1118,13 +1120,14 @@ $studentCards = $studentCards->getUserCardSet($userId);
         </div>
       </div>
 
-      <?php foreach ($studentCards as $studentCard){?>
+      <?php foreach ($studentCards as $studentCard){
+        $set_id = $studentCard['id']; ?>
       <div class="row">
         <div class="card text-bg-light mb-3" style="max-width: 39rem; margin-right: 20px;">
           <div class="card-body">
-            <h5 class="card-title"><?php echo $studentCard->set_name?></h5>
-            <p class="card-text mb-5"><?php echo $studentCard->total_cards?> terms</p>
-            <h6 class="card-title mt-5"><?php echo $studentCard->first_name . $studentCard->last_name?></h6>
+            <h5 class="card-title"><?php echo $studentCard['set_name']?></h5>
+            <p class="card-text mb-5"><?php $total = $totalCards->getTotalCards($set_id); echo $total['total_cards'];?> terms</p>
+            <h6 class="card-title mt-5"><?php echo $studentCard['first_name'] . ' ' . $studentCard['last_name']?></h6>
           </div>
         </div>
       <?php } ?>
