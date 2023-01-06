@@ -1,7 +1,29 @@
 <?php
 include ('vendor/autoload.php');
 require ('init.php');
-use App\User;
+require ('connection.php');
+session_start();
+if(isset($_POST['login'])){
+    if($_POST['username'] == '' OR $_POST['password'] == ''){
+        echo 'Password cannot be empty';
+    } else {
+        $username = strip_tags(trim($_POST['username']));
+        $password = strip_tags(trim($_POST['password']));
+        $query = $db->prepare('SELECT * FROM tb_users WHERE username=? AND password=?');
+        $query->execute(array($username, $password));
+        $query2 = $db->prepare('SELECT * FROM tb_users WHERE username=:username AND password=:password');
+        $query2->execute([
+          ':username' => $username,
+          ':password' => $password,
+        ]);
+        $control = $query->fetch(PDO::FETCH_OBJ);
+        $control2 = $query2->fetch();
+        if ($control > 0){
+            $_SESSION['username'] = $username;
+            header("Location: index.php?user_id=" . $control2['id']);
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -726,12 +748,12 @@ use App\User;
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
                 <h4 class="font-weight-bolder">Sign In</h4>
-                <p class="mb-0">Enter your email and password to sign in</p>
+                <p class="mb-0">Enter your username and password to sign in</p>
               </div>
               <div class="card-body">
                 <form role="form" method="POST">
                   <div class="mb-3">
-                    <input type="email" name="email_address" class="form-control form-control-lg" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
+                    <input type="text" name="username" class="form-control form-control-lg" placeholder="Username" aria-label="Email" aria-describedby="email-addon">
                   </div>
                   <div class="mb-3">
                     <input type="password" name="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="password-addon">

@@ -1,10 +1,24 @@
 <?php
 include ('vendor/autoload.php');
+session_start();
 require ('init.php');
-use App\User;
+if(isset($_POST['login'])){
+    if($_POST['username'] == '' OR $_POST['password'] == ''){
+        echo 'Password cannot be empty';
+    } else {
+        $username = strip_tags(trim($_POST['username']));
+        $password = strip_tags(trim($_POST['password']));
+        $query = $db->prepare('SELECT * FROM tb_users WHERE username=? AND password=?');
+        $query->execute(array($username, $password));
+        $control = $query->fetch($PDO::FETCH_OBJ);
+        if ($control > 0){
+            $_SESSION['username'] = $username;
+            header('Location: index.php');  
+        }
 
-$getLoginInfo = new User('');
-$getLoginInfo->setConnection($connection);
+
+    }
+}
 
 ?>
 
@@ -16,8 +30,8 @@ $getLoginInfo->setConnection($connection);
         <div class="container">
             <form method="POST">
                 <div class="container">
-                    <label>Email</label>
-                    <input type="email" name="email_address">
+                    <label>Username</label>
+                    <input type="text" name="username">
                 </div>
                 <div class="container">
                     <label>Password</label>

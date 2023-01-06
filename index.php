@@ -6,7 +6,10 @@ use App\Card;
 $cards = new Card('');
 $cards->setConnection($connection);
 $cards = $cards->getAll();
-
+session_start();
+if (!isset($_SESSION['username'])){
+  header('location: sign-in.php');
+}
 ?>
 
 
@@ -972,7 +975,7 @@ $cards = $cards->getAll();
                 </li>
                 <li class="nav-item my-auto ms-3 ms-lg-0">
 
-                  <a href="create-study-set.php"
+                  <a href="create-study-set.php?user_id=<?php echo $_GET['user_id'];?>"
                     class="btn btn-sm  bg-gradient-primary  btn-round mb-0 me-1 mt-2 mt-md-0">Create Study Set</a>
 
                 </li>
@@ -1064,7 +1067,7 @@ $cards = $cards->getAll();
           <div class="row">
             <div class="col-12 justify-content-center">
               <div class="p-3 mt-4 text-center justify-content-center">
-                <h1 class="text-gradient text-primary">Welcome, Audriel!</h1>
+                <h1 class="text-gradient text-primary">Welcome, <?php echo $_SESSION['username']?>!</h1>
                 <!-- <h5 class="mt-3">Coded Elements</h5>
                 <p class="text-sm">From buttons, to inputs, navbars, alerts or cards, you are covered</p> -->
               </div>

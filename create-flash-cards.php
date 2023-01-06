@@ -898,7 +898,7 @@ $cardsBySet = $cards->getBySet($set_id);
 
           <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="true">
             <div class="carousel-indicators mb-2">
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $cardsBySet[0]['id'] ?>" class="active" aria-current="true" aria-label="Slide <?php echo $cards[0]['id'] ?>"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="active" aria-current="true" aria-label="1"></button>
 
               <?php foreach ($cardsBySet as $card) {  ?>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $card['id'] ?>" aria-current="true" aria-label="Slide <?php echo $card['id'] ?>"></button>
@@ -927,7 +927,7 @@ $cardsBySet = $cards->getBySet($set_id);
                             <div class="card-block">
                               <div class="row">
                                 <div class="col">
-                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $i ?> / 13</h6>
+                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $i ?> / <?php echo sizeof($cardsBySet)?> </h6>
                                 </div>
                                 <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
                                 <div class="col">
@@ -981,7 +981,7 @@ $cardsBySet = $cards->getBySet($set_id);
                             <div class="card-block">
                               <div class="row">
                                 <div class="col">
-                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $i ?> / n</h6>
+                                  <h6 class="card-title text-center mx-4 my-3"><?php echo $i ?> / <?php echo sizeof($cardsBySet)?></h6>
                                 </div>
                                 <h3 class="card-title text-center mt-8"><?php echo $card['title'] ?></h3>
                                 <div class="col">
@@ -8714,7 +8714,7 @@ if (isset($_POST['card'])) {
   $cardInfo = new Card($_POST['set_id'], $_POST['title'], $_POST['description']);
   $cardInfo->setConnection($connection);
   $cardInfo->save();
-  header("Location: card.php");
+  echo "<script type='text/javascript'> document.location = 'create-flash-cards.php?" . "set_id=" . $set_id . "'; </script>";
   exit();
 }
 ?>

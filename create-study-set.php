@@ -879,7 +879,7 @@ use App\Set;
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Set Title</label>
                 <input type="text" class="form-control" name="set_name" id="exampleFormControlInput1" placeholder="Title of Set">
-                <input type="hidden" class="form-control" name="user_id" id="exampleFormControlInput1" value="2">
+                <input type="hidden" class="form-control" name="user_id" id="exampleFormControlInput1" value="<?php echo $_GET['user_id']?>">
               </div>
               <button type="submit" class="btn btn-primary" name="create">Create</button>
             </div>
